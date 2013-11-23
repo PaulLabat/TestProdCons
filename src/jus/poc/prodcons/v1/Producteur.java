@@ -37,12 +37,15 @@ public class Producteur extends Acteur implements _Producteur {
 		while(nbMsgProduit < nbMessage)//la garde
 		{
 			try {
-				Message msg = new MessageX(identification(),nbMsgProduit);			
+				Message msg = new MessageX(identification(),nbMsgProduit);
+				System.out.println("Producteur "+identification()+"a produit le msg : "+msg);
 				tampon.put(this, msg);
 				
 				synchronized(this){
 					nbMsgProduit++;
-					wait(100*alea.next());
+					int wait = 100*alea.next();
+					System.out.println("Producteur" + identification()+ "wait "+wait);
+					wait(wait);
 				}
 				
 			} catch (Exception e) {

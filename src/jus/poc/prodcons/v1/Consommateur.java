@@ -1,21 +1,56 @@
 package jus.poc.prodcons.v1;
 
 import jus.poc.prodcons.Acteur;
+import jus.poc.prodcons.Aleatoire;
 import jus.poc.prodcons.ControlException;
+import jus.poc.prodcons.Message;
 import jus.poc.prodcons.Observateur;
+import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Consommateur;
 
 public class Consommateur extends Acteur implements _Consommateur {
 
-	public Consommateur(int type, Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement) throws ControlException {
+	private int nbMsgProduit;
+	private Tampon tampon;
+	private Aleatoire alea;
+	
+	
+	public Consommateur(int type, Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, Tampon tampon, Aleatoire alea) throws ControlException {
 		super(type, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
-		// TODO Auto-generated constructor stub
+		this.alea = alea;
+		this.tampon = tampon;
+		nbMsgProduit = 0;
 	}
-
-	@Override
+	/**
+	 * retourne le nbre de message traites
+	 */
 	public int nombreDeMessages() {
-		// TODO Auto-generated method stub
-		return 0;
+		return nbMsgProduit;
 	}
+	
+	
+	public void run()
+	{
+		while(true)
+		{
+			try {
+				Message msg = tampon.get(this);// recupere le message depuis le tampon
+				System.out.println("Le consommateur "+identification() + "a lu le message "+msg);
+				synchronized(this){
+					nbMsgProduit++;
+					int wait = 100*alea.next();
+					System.out.println("Consommateur "+identification()+"wait " + wait);
+					wait(wait);
+				}
+				
+				
+			} catch ( Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}//
+		}
+	}
+	
+	
 
 }
