@@ -15,8 +15,8 @@ public class Producteur extends Acteur implements _Producteur {
 	private Tampon tampon;
 	private Aleatoire alea;
 	
-	public Producteur(int type, Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, int nbMessage, Tampon tampon, Aleatoire alea) throws ControlException {
-		super(type, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
+	public Producteur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, int nbMessage, Tampon tampon, Aleatoire alea) throws ControlException {
+		super(Acteur.typeProducteur, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
 		this.nbMessage = nbMessage;
 		this.alea = alea;
 		this.tampon = tampon;
@@ -38,13 +38,13 @@ public class Producteur extends Acteur implements _Producteur {
 		{
 			try {
 				Message msg = new MessageX(identification(),nbMsgProduit);
-				System.out.println("Producteur "+identification()+"a produit le msg : "+msg);
+				System.out.println("Producteur "+identification()+" a produit le msg : "+msg);
 				tampon.put(this, msg);
 				
 				synchronized(this){
-					nbMsgProduit++;
-					int wait = 100*alea.next();
-					System.out.println("Producteur" + identification()+ "wait "+wait);
+					nbMsgProduit++; 
+					int wait = 10*alea.next();
+					System.out.println("Producteur" + identification()+ " wait "+wait);
 					wait(wait);
 				}
 				

@@ -15,8 +15,8 @@ public class Consommateur extends Acteur implements _Consommateur {
 	private Aleatoire alea;
 	
 	
-	public Consommateur(int type, Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, Tampon tampon, Aleatoire alea) throws ControlException {
-		super(type, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
+	public Consommateur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, Tampon tampon, Aleatoire alea) throws ControlException {
+		super(Acteur.typeConsommateur, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
 		this.alea = alea;
 		this.tampon = tampon;
 		nbMsgProduit = 0;
@@ -35,11 +35,11 @@ public class Consommateur extends Acteur implements _Consommateur {
 		{
 			try {
 				Message msg = tampon.get(this);// recupere le message depuis le tampon
-				System.out.println("Le consommateur "+identification() + "a lu le message "+msg);
+				System.out.println("Le consommateur "+identification() + " a lu le message "+msg);
 				synchronized(this){
 					nbMsgProduit++;
-					int wait = 100*alea.next();
-					System.out.println("Consommateur "+identification()+"wait " + wait);
+					int wait = 10*alea.next();
+					System.out.println("Consommateur "+identification()+" wait " + wait);
 					wait(wait);
 				}
 				
