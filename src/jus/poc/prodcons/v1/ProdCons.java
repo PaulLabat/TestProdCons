@@ -7,32 +7,72 @@ import jus.poc.prodcons._Producteur;
 
 public class ProdCons implements Tampon {
 
-	public ProdCons() {
-		// TODO Auto-generated constructor stub
+	private Message[] msg;
+	private int debut = 0;
+	private int fin = 0;
+	private int cpt = 0;
+	
+	
+	public ProdCons(int taille) {
+		msg = new Message[taille];
 	}
 
+	/**
+	 * Nombre de message dans le buffer
+	 */
 	@Override
 	public int enAttente() {
-		// TODO Auto-generated method stub
-		return 0;
+		return cpt;
 	}
 
 	@Override
-	public Message get(_Consommateur arg0) throws Exception,InterruptedException {
-		// TODO Auto-generated method stub
-		return null;
+	public synchronized Message get(_Consommateur arg0) throws Exception,InterruptedException {
+		while(isVide())//tant que le buffer est vide, on attend
+		{
+			wait();
+		}
+		Message m = msg[debut];
+		debut = (debut + 1) % taille();
+		cpt--;
+		notifyAll();
+		return m;
 	}
 
 	@Override
-	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
-		// TODO Auto-generated method stub
-
+	public synchronized void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
+		while(isPlein())//tant que le buffer est plein, on attend
+		{
+			wait();
+		}
+		msg[fin] = arg1;
+		fin = (fin + 1) % taille();
+		cpt++;
+		notifyAll();
 	}
 
+	/**
+	 * Taille du buffer
+	 */
 	@Override
 	public int taille() {
-		// TODO Auto-generated method stub
-		return 0;
+		return msg.length;
 	}
 
+	/**
+	 * Renvoie vrai si le buffer est plein
+	 * @return cpt == taille()
+	 */
+	private boolean isPlein()
+	{
+		return cpt == taille();
+	}
+	/**
+	 * Renvoie vrai si le buffer est vide
+	 * @return cpt == 0
+	 */
+	private boolean isVide()
+	{
+		return cpt == 0;
+	}
+	
 }
