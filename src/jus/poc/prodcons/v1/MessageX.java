@@ -3,14 +3,19 @@ package jus.poc.prodcons.v1;
 import jus.poc.prodcons.Message;
 
 public class MessageX implements Message {
-
-	public MessageX() {
-		// TODO Auto-generated constructor stub
+	
+	private int idProd;
+	private int numMsg;
+	
+	
+	public MessageX(int idProd, int numMsg) {
+		this.idProd = idProd;
+		this.numMsg = numMsg;
 	}
 	
 	public String toString()
 	{
-		return null;
+		return "Le message "+numMsg+"est produit par "+idProd;
 		
 		
 	}

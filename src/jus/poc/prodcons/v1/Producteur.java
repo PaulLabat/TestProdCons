@@ -15,8 +15,6 @@ public class Producteur extends Acteur implements _Producteur {
 	private Tampon tampon;
 	private Aleatoire alea;
 	
-	
-	
 	public Producteur(int type, Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, int nbMessage, Tampon tampon, Aleatoire alea) throws ControlException {
 		super(type, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
 		this.nbMessage = nbMessage;
@@ -36,10 +34,10 @@ public class Producteur extends Acteur implements _Producteur {
 	
 	public void run()
 	{
-		while(nbMsgProduit < nbMessage)
+		while(nbMsgProduit < nbMessage)//la garde
 		{
 			try {
-				Message msg = new MessageX();			
+				Message msg = new MessageX(identification(),nbMsgProduit);			
 				tampon.put(this, msg);
 				
 				synchronized(this){
