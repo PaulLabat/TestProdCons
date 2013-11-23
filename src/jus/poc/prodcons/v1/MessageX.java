@@ -12,6 +12,7 @@ public class MessageX implements Message {
 	{
 		return null;
 		
+		
 	}
 
 }
