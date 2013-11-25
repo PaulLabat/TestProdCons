@@ -15,7 +15,7 @@ public class MessageX implements Message {
 	
 	public String toString()
 	{
-		return "Le message "+numMsg+"est produit par "+idProd;
+		return "Le message "+numMsg+" est produit par "+idProd;
 		
 		
 	}
