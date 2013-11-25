@@ -12,9 +12,16 @@ public class ProdCons implements Tampon {
 	private int fin = 0;
 	private int cpt = 0;
 	
+	// Creation des 3 Semaphores 
+	public Semaphore consoLibre;
+	public Semaphore prodLibre;
+	public Semaphore mutex;
 	
 	public ProdCons(int taille) {
 		msg = new Message[taille];
+		consoLibre = new Semaphore(0);
+		prodLibre = new Semaphore(taille);
+		mutex = new Semaphore(1);
 	}
 
 	/**
@@ -27,27 +34,25 @@ public class ProdCons implements Tampon {
 
 	@Override
 	public synchronized Message get(_Consommateur arg0) throws Exception,InterruptedException {
-		while(isVide())//tant que le buffer est vide, on attend
-		{
-			wait();
-		}
+		consoLibre.p(); // on verifie la presence de ressources
+		mutex.p(); // accee unique au buffer
 		Message m = msg[debut];
 		debut = (debut + 1) % taille();
 		cpt--;
-		notifyAll();
+		mutex.v(); // deblocage de l'acce au buffer
+		prodLibre.v(); // pour avertir les producteurs
 		return m;
 	}
 
 	@Override
 	public synchronized void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
-		while(isPlein())//tant que le buffer est plein, on attend
-		{
-			wait();
-		}
+		prodLibre.p();
+		mutex.p(); // blocage du buffer
 		msg[fin] = arg1;
 		fin = (fin + 1) % taille();
 		cpt++;
-		notifyAll();
+		mutex.v(); // deblocage du buffer
+		consoLibre.v(); // pour avertir les consommateurs
 	}
 
 	/**

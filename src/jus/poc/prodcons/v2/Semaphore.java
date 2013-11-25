@@ -5,21 +5,23 @@ import java.util.ArrayList;
 public class Semaphore {
 
 	private int cpt;
-	private ArrayList<Thread> liste;
 	
 	public Semaphore(int taille) {
 		cpt = taille;
-		liste = new ArrayList();
 	}
 	
-	public synchronized void p()
+	public synchronized void p() throws InterruptedException
 	{
-		
+		if(--cpt < 0){
+			wait();
+		}
 	}
 	
 	public synchronized void v()
 	{
-		
+		if(++cpt <= 0){
+			notify();
+		}
 	}
 	
 	
