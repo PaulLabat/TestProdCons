@@ -50,6 +50,7 @@ public class TestProdCons extends Simulateur {
 		{
 			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons);
 			consommateurs.put(c.identification(), c);
+			c.setDaemon(true);
 			c.start();
 		}
 		
