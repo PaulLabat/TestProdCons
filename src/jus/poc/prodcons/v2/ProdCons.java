@@ -33,10 +33,11 @@ public class ProdCons implements Tampon {
 	}
 
 	@Override
-	public synchronized Message get(_Consommateur arg0) throws Exception,InterruptedException {
+	public Message get(_Consommateur arg0) throws Exception,InterruptedException {
+		Message m;
 		consoLibre.p(); // on verifie la presence de ressources
 		mutex.p(); // accee unique au buffer
-		Message m = msg[debut];
+		m = msg[debut];
 		debut = (debut + 1) % taille();
 		cpt--;
 		mutex.v(); // deblocage de l'acce au buffer
@@ -45,7 +46,7 @@ public class ProdCons implements Tampon {
 	}
 
 	@Override
-	public synchronized void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
+	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
 		prodLibre.p();
 		mutex.p(); // blocage du buffer
 		msg[fin] = arg1;
