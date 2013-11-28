@@ -36,7 +36,7 @@ public class ProdCons implements Tampon {
 	}
 
 	@Override
-	public Message get(_Consommateur arg0) throws Exception,InterruptedException {
+	public synchronized Message get(_Consommateur arg0) throws Exception,InterruptedException {
 		Message m;
 		consoLibre.p(); // on verifie la presence de ressources
 		mutex.p(); // acce unique au buffer

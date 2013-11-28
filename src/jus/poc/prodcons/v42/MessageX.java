@@ -27,7 +27,7 @@ public class MessageX implements Message {
 
 	public String toString()
 	{
-		return "(IDmsg : "+numMsg+", IDprod : "+idProd +")";		
+		return "(IDmsg : "+numMsg+", IDprod : "+idProd + ")";		
 	}
 	public void consommation(){
 		nbConso++;

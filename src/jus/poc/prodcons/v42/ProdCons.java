@@ -12,7 +12,7 @@ public class ProdCons implements Tampon {
 	private int debut = 0;
 	private int fin = 0;
 	private int cpt = 0;
-	private int tBuffer = 0;
+	//private int tBuffer = 0;
 	
 	// Creation des 3 Semaphores 
 	public Semaphore consoLibre;
@@ -41,7 +41,7 @@ public class ProdCons implements Tampon {
 	}
 
 	@Override
-	public Message get(_Consommateur arg0) throws Exception,InterruptedException {
+	public synchronized Message get(_Consommateur arg0) throws Exception,InterruptedException {
 		MessageX m;
 		consoLibre.p(); // on verifie la presence de ressources
 		mutex.p(); // acce unique au buffer
@@ -50,8 +50,8 @@ public class ProdCons implements Tampon {
 		obs.retraitMessage(arg0, m);
 		if(m.destruction()){
 			debut = (debut + 1) % taille;
-			cpt++;
-			tBuffer--;
+			//cpt++;
+			//tBuffer--;
 			mutex.v(); // Libération de l'acce au buffer
 			prodLibre.v(); //Avertissement des producteurs
 			lecProd.v(); // Liberation des prod bloques
@@ -69,7 +69,7 @@ public class ProdCons implements Tampon {
 		msg[fin] = arg1;
 		obs.depotMessage(arg0, arg1);
 		fin = (fin + 1) % taille();
-		cpt++;
+		//cpt++;
 		mutex.v(); // deblocage du buffer
 		consoLibre.v(); // pour avertir les consommateurs
 		lecProd.p(); // blocage du producteur tant qu'un message n'est pas lu X fois.
