@@ -1,4 +1,4 @@
-package jus.poc.prodcons.v3;
+package jus.poc.prodcons.v4;
 
 import jus.poc.prodcons.Acteur;
 import jus.poc.prodcons.Aleatoire;
@@ -7,7 +7,7 @@ import jus.poc.prodcons.Message;
 import jus.poc.prodcons.Observateur;
 import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Producteur;
-import jus.poc.prodcons.v3.MessageX;
+import jus.poc.prodcons.v4.MessageX;
 
 public class Producteur extends Acteur implements _Producteur {
 
@@ -15,12 +15,15 @@ public class Producteur extends Acteur implements _Producteur {
 	private int nbMsgProduit;
 	private Tampon tampon;
 	private Aleatoire alea;
+	private Aleatoire nbCopies;
 	
-	public Producteur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, int nbMessage, Tampon tampon, Aleatoire alea) throws ControlException {
+	public Producteur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, 
+			int nbMessage, Tampon tampon, Aleatoire alea, Aleatoire copies) throws ControlException {
 		super(Acteur.typeProducteur, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
 		this.nbMessage = nbMessage;
 		this.alea = alea;
 		this.tampon = tampon;
+		this.nbCopies = copies;
 		nbMsgProduit = 0;
 	}
 	
@@ -38,7 +41,7 @@ public class Producteur extends Acteur implements _Producteur {
 		while(nbMsgProduit < nbMessage)//la garde
 		{
 			try {
-				Message msg = new MessageX(identification(),nbMsgProduit);
+				Message msg = new MessageX(identification(),nbMsgProduit, nbCopies.next());
 				System.out.println("Producteur "+identification()+" a produit le msg : "+msg);
 				tampon.put(this, msg);
 				
