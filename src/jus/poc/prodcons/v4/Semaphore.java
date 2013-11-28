@@ -20,7 +20,7 @@ public class Semaphore {
 	public synchronized void v()
 	{
 		if(++cpt <= 0){
-			notifyAll();
+			notify();
 		}
 	}
 	
