@@ -39,7 +39,7 @@ public class Consommateur extends Acteur implements _Consommateur {
 				synchronized(this){
 					nbMsgProduit++;
 					int wait = 10*alea.next();
-					System.out.println("Consommateur "+identification()+" wait " + wait);
+					//System.out.println("Consommateur "+identification()+" wait " + wait);
 					wait(wait);
 				}
 				
