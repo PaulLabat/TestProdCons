@@ -45,6 +45,7 @@ public class Producteur extends Acteur implements _Producteur {
 				synchronized(this){
 					nbMsgProduit++; 
 					int wait = 10*alea.next();
+					observateur.productionMessage(this, msg, wait);
 					//System.out.println("Producteur" + identification()+ " wait "+wait);
 					wait(wait);
 				}
