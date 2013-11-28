@@ -35,6 +35,10 @@ public class Consommateur extends Acteur implements _Consommateur {
 		{
 			try {
 				Message msg = tampon.get(this);// recupere le message depuis le tampon
+				if (msg == null) { // si msg == null c'est que le tampon est fermé car il n'y a plus de producteurs
+                    System.out.println("Retour null " + identification());
+                    return;
+                }
 				System.out.println("Le consommateur "+identification() + " a lu le message "+msg);
 				synchronized(this){
 					nbMsgProduit++;

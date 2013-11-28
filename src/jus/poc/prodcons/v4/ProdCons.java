@@ -8,7 +8,7 @@ import jus.poc.prodcons._Producteur;
 
 public class ProdCons implements Tampon {
 
-	private Message[] msg;
+	private MessageX[] msg;
 	private int debut = 0;
 	private int fin = 0;
 	private int cpt = 0;
@@ -18,12 +18,15 @@ public class ProdCons implements Tampon {
 	public Semaphore prodLibre;
 	public Semaphore mutex;
 	public Observateur obs;
+	public Semaphore[] nbMessages;
+	public boolean stop = false;
 	
 	public ProdCons(int taille, Observateur obsParam) {
-		msg = new Message[taille];
+		msg = new MessageX[taille];
 		consoLibre = new Semaphore(0);
 		prodLibre = new Semaphore(taille);
 		mutex = new Semaphore(1);
+		nbMessages = new Semaphore[taille];
 		this.obs = obsParam;
 	}
 
@@ -37,28 +40,57 @@ public class ProdCons implements Tampon {
 
 	@Override
 	public Message get(_Consommateur arg0) throws Exception,InterruptedException {
-		Message m;
+		MessageX m;
 		consoLibre.p(); // on verifie la presence de ressources
+		if (stop) { // si on a stoppé le tampon, on rend la sémaphore passante et on retourne null
+            consoLibre.v();
+            return null;
+        }
 		mutex.p(); // acce unique au buffer
+		int stock = debut; //stockage de la valeur debut
 		m = msg[debut];
 		obs.retraitMessage(arg0, m);
-		debut = (debut + 1) % taille();
-		cpt--;
-		mutex.v(); // deblocage de l'acce au buffer
-		prodLibre.v(); // pour avertir les producteurs
+		m.consommationCopie();
+		
+		
+		if(m.getNbConso() > 0){
+			prodLibre.v();
+			mutex.v();
+			nbMessages[stock].p();
+			mutex.p();
+			nbMessages[stock].v();
+		}else{
+			msg[debut] = null;
+			debut = (debut + 1) % taille();
+			nbMessages[stock].v();
+			consoLibre.v();
+		}
+		mutex.v();
 		return m;
 	}
 
 	@Override
 	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
+		if(!(arg1 instanceof MessageX)){
+			throw new Exception("Le message n'est pas un MessageX");
+		}
+		MessageX m = (MessageX) arg1;
+        if (stop) { // si tampon annulé, on ne fait rien
+            return;
+        }
 		prodLibre.p();
 		mutex.p(); // blocage du buffer
-		msg[fin] = arg1;
+		msg[fin] = m;
 		obs.depotMessage(arg0, arg1);
+		nbMessages[fin] = new Semaphore(0);
+		int stock = fin;
 		fin = (fin + 1) % taille();
 		cpt++;
 		mutex.v(); // deblocage du buffer
 		consoLibre.v(); // pour avertir les consommateurs
+		
+		nbMessages[stock].p();
+		nbMessages[stock].v();
 	}
 
 	/**

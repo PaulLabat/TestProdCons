@@ -8,7 +8,7 @@ public class MessageX implements Message {
 	private int idProd;
 	private int numMsg;
 	private int nbMsg;
-	private int nbConso;
+	private int nbConso = 0;
 	
 	
 	protected int getNbConso() {
@@ -23,7 +23,7 @@ public class MessageX implements Message {
 	
 	public String toString()
 	{
-		return "(IDmsg : "+numMsg+", IDprod : "+idProd +")";
+		return "(IDmsg : "+numMsg+", IDprod : "+idProd + ", NBCopiesRestantes : " + nbConso + ")";
 		
 		
 	}
