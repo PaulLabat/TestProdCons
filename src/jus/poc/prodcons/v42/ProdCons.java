@@ -46,6 +46,7 @@ public class ProdCons implements Tampon {
 		consoLibre.p(); // on verifie la presence de ressources
 		mutex.p(); // acce unique au buffer
 		m = (MessageX) msg[debut];
+		m.consommation();
 		obs.retraitMessage(arg0, m);
 		if(m.destruction()){
 			debut = (debut + 1) % taille;
