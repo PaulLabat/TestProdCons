@@ -23,7 +23,7 @@ public class MessageX implements Message {
 	
 	public String toString()
 	{
-		return "(IDmsg : "+numMsg+", IDprod : "+idProd + ", NBCopiesRestantes : " + nbConso + ")";
+		return "(IDmsg : "+numMsg+", IDprod : "+idProd + ", NBCopiesRestantes : " + (nbMsg - nbConso) + ")";
 		
 		
 	}
