@@ -8,25 +8,27 @@ import jus.poc.prodcons._Producteur;
 
 public class ProdCons implements Tampon {
 
-	private MessageX[] msg;
+	private Message[] msg;
 	private int debut = 0;
 	private int fin = 0;
 	private int cpt = 0;
+	//private int tBuffer = 0;
 	
 	// Creation des 3 Semaphores 
 	public Semaphore consoLibre;
 	public Semaphore prodLibre;
 	public Semaphore mutex;
 	public Observateur obs;
-	public Semaphore[] nbMessages;
-	public boolean stop = false;
+	public Semaphore lecProd;
+	public int taille;
 	
-	public ProdCons(int taille, Observateur obsParam) {
-		msg = new MessageX[taille];
+	public ProdCons(int taille2, Observateur obsParam) {
+		msg = new Message[taille2];
 		consoLibre = new Semaphore(0);
-		prodLibre = new Semaphore(taille);
+		prodLibre = new Semaphore(taille2);
+		this.taille = taille2;
 		mutex = new Semaphore(1);
-		nbMessages = new Semaphore[taille];
+		lecProd = new Semaphore(0);
 		this.obs = obsParam;
 	}
 
@@ -39,63 +41,38 @@ public class ProdCons implements Tampon {
 	}
 
 	@Override
-	public Message get(_Consommateur arg0) throws Exception,InterruptedException {
+	public synchronized Message get(_Consommateur arg0) throws Exception,InterruptedException {
 		MessageX m;
 		consoLibre.p(); // on verifie la presence de ressources
-		if (stop) { // si on a stoppé le tampon, on rend la sémaphore passante et on retourne null
-            consoLibre.v();
-            return null;
-        }
 		mutex.p(); // acce unique au buffer
-		int stock = debut; //stockage de la valeur debut
-		m = msg[debut];
+		m = (MessageX) msg[debut];
+		m.consommation();
 		obs.retraitMessage(arg0, m);
-		m.consommationCopie();
-		System.out.println("test1");
-		
-		if(m.getNbConso() > 0){
-			System.out.println("test2");
-			prodLibre.v();
-			System.out.println("test3");
-			mutex.v();
-			System.out.println("test4");
-			nbMessages[stock].p();
-			System.out.println("test5");
-			mutex.p();
-			nbMessages[stock].v();
+		if(m.destruction()){
+			debut = (debut + 1) % taille;
+			//cpt++;
+			//tBuffer--;
+			mutex.v(); // Libï¿½ration de l'acce au buffer
+			prodLibre.v(); //Avertissement des producteurs
+			lecProd.v(); // Liberation des prod bloques
 		}else{
-			System.out.println("test3");
-			msg[debut] = null;
-			debut = (debut + 1) % taille();
-			nbMessages[stock].v();
+			mutex.v();
 			consoLibre.v();
 		}
-		mutex.v();
 		return m;
 	}
 
 	@Override
 	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
-		if(!(arg1 instanceof MessageX)){
-			throw new Exception("Le message n'est pas un MessageX");
-		}
-		MessageX m = (MessageX) arg1;
-        if (stop) { // si tampon annulé, on ne fait rien
-            return;
-        }
 		prodLibre.p();
 		mutex.p(); // blocage du buffer
-		msg[fin] = m;
+		msg[fin] = arg1;
 		obs.depotMessage(arg0, arg1);
-		nbMessages[fin] = new Semaphore(0);
-		int stock = fin;
 		fin = (fin + 1) % taille();
-		cpt++;
+		//cpt++;
 		mutex.v(); // deblocage du buffer
 		consoLibre.v(); // pour avertir les consommateurs
-		
-		nbMessages[stock].p();
-		nbMessages[stock].v();
+		lecProd.p(); // blocage du producteur tant qu'un message n'est pas lu X fois.
 	}
 
 	/**

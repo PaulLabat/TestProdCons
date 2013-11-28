@@ -15,15 +15,14 @@ public class Producteur extends Acteur implements _Producteur {
 	private int nbMsgProduit;
 	private Tampon tampon;
 	private Aleatoire alea;
-	private Aleatoire nbCopies;
+	private Aleatoire nbMsg;
 	
-	public Producteur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, 
-			int nbMessage, Tampon tampon, Aleatoire alea, Aleatoire copies) throws ControlException {
+	public Producteur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, int nbMessage, Tampon tampon, Aleatoire alea, Aleatoire nbMes) throws ControlException {
 		super(Acteur.typeProducteur, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
 		this.nbMessage = nbMessage;
 		this.alea = alea;
 		this.tampon = tampon;
-		this.nbCopies = copies;
+		this.nbMsg = nbMes;
 		nbMsgProduit = 0;
 	}
 	
@@ -41,10 +40,9 @@ public class Producteur extends Acteur implements _Producteur {
 		while(nbMsgProduit < nbMessage)//la garde
 		{
 			try {
-				Message msg = new MessageX(identification(),nbMsgProduit, nbCopies.next());
-				System.out.println("Producteur "+identification()+" a produit le msg : "+msg);
+				MessageX msg = new MessageX(identification(),nbMsgProduit, nbMsg.next());
+				System.out.println("Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
 				tampon.put(this, msg);
-				
 				synchronized(this){
 					nbMsgProduit++; 
 					int wait = 10*alea.next();

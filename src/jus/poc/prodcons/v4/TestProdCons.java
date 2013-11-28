@@ -46,8 +46,7 @@ public class TestProdCons extends Simulateur {
 		Aleatoire aleaCons = new TirageAlea(tempsMoyenConsommation,deviationTempsMoyenConsommation);
 		Aleatoire aleaTempsProd = new TirageAlea(tempsMoyenProduction, deviationTempsMoyenProduction);
 		Aleatoire aleaNbreAProduire = new TirageAlea(nombreMoyenDeProduction, deviationNombreMoyenDeProduction);
-		Aleatoire aleaNbreExemplaires = new TirageAlea(nombreMoyenNbExemplaire, deviationNombreMoyenNbExemplaire);
-		
+		Aleatoire aleaNbMes = new Aleatoire(nombreMoyenNbExemplaire, deviationNombreMoyenNbExemplaire);
 		try {
 			observateur.init(nbProd, nbCons, nbBuffer);
 		} catch (ControlException e) {
@@ -65,7 +64,8 @@ public class TestProdCons extends Simulateur {
 		
 		for(i=0;i<nbProd;i++)
 		{
-			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, aleaNbreAProduire.next(), t, aleaTempsProd, aleaNbreExemplaires);
+			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, 
+					aleaNbreAProduire.next(), t, aleaTempsProd, aleaNbMes);
 			producteurs.put(p.identification(), p);
 			observateur.newProducteur(p);
 			p.start();
