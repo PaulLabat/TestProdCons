@@ -51,15 +51,20 @@ public class ProdCons implements Tampon {
 		m = msg[debut];
 		obs.retraitMessage(arg0, m);
 		m.consommationCopie();
-		
+		System.out.println("test1");
 		
 		if(m.getNbConso() > 0){
+			System.out.println("test2");
 			prodLibre.v();
+			System.out.println("test3");
 			mutex.v();
+			System.out.println("test4");
 			nbMessages[stock].p();
+			System.out.println("test5");
 			mutex.p();
 			nbMessages[stock].v();
 		}else{
+			System.out.println("test3");
 			msg[debut] = null;
 			debut = (debut + 1) % taille();
 			nbMessages[stock].v();
