@@ -36,7 +36,7 @@ public class ProdCons implements Tampon {
 	}
 
 	@Override
-	public synchronized Message get(_Consommateur arg0) throws Exception,InterruptedException {
+	public Message get(_Consommateur arg0) throws Exception,InterruptedException {
 		Message m;
 		consoLibre.p(); // on verifie la presence de ressources
 		mutex.p(); // acce unique au buffer
@@ -44,6 +44,7 @@ public class ProdCons implements Tampon {
 		obs.retraitMessage(arg0, m);
 		debut = (debut + 1) % taille();
 		cpt--;
+		System.out.println("\t\tConsommateur "+arg0.identification()+" a recupere le msg : "+m);
 		mutex.v(); // deblocage de l'acce au buffer
 		prodLibre.v(); // pour avertir les producteurs
 		return m;
@@ -57,6 +58,7 @@ public class ProdCons implements Tampon {
 		obs.depotMessage(arg0, arg1);
 		fin = (fin + 1) % taille();
 		cpt++;
+		System.out.println("\tProducteur "+arg0.identification()+" a depose le msg : "+arg1);
 		mutex.v(); // deblocage du buffer
 		consoLibre.v(); // pour avertir les consommateurs
 	}
