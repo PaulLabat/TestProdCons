@@ -48,19 +48,21 @@ public class ProdCons implements Tampon {
 		m = (MessageX) msg[debut];
 		m.consommation();
 		obs.retraitMessage(arg0, m);
+		//System.out.println("\t\tConsommateur "+arg0.identification()+" a recupere le msg : "+m);
 		if(m.destruction()){
 			debut = (debut + 1) % taille;
 			//cpt++;
 			//tBuffer--;
-			
+			System.out.println("\t\tConsommateur "+arg0.identification()+" a recupere le msg : "+m);
 			mutex.v(); // Lib�ration de l'acce au buffer
 			prodLibre.v(); //Avertissement des producteurs
 			lecProd.v(); // Liberation des prod bloques
 		}else{
+			System.out.println("\t\tConsommateur "+arg0.identification()+" a recupere le msg : "+m);
 			mutex.v();
 			consoLibre.v();
 		}
-		System.out.println("\t\tConsommateur "+arg0.identification()+" a recupere le msg : "+m);
+		
 		return m;
 	}
 
