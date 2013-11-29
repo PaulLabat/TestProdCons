@@ -34,19 +34,25 @@ public class ProdCons implements Tampon {
 		Message m = msg[debut];
 		debut = (debut + 1) % taille();
 		cpt--;
+		System.out.println("\t\tConsommateur "+arg0.identification()+" a recupere le msg : "+m);
+		//System.out.println(cpt);
 		notifyAll();
 		return m;
 	}
 
 	@Override
 	public synchronized void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
+		//System.out.println(isPlein());
 		while(isPlein())//tant que le buffer est plein, on attend
 		{
 			wait();
 		}
+		
 		msg[fin] = arg1;
 		fin = (fin + 1) % taille();
 		cpt++;
+		System.out.println("\tProducteur "+arg0.identification()+" a depose le msg : "+arg1);
+		//System.out.println(cpt);
 		notifyAll();
 	}
 
