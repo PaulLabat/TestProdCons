@@ -14,6 +14,7 @@ import jus.poc.prodcons.ControlException;
 import jus.poc.prodcons.Observateur;
 import jus.poc.prodcons.Simulateur;
 import jus.poc.prodcons.Tampon;
+import jus.poc.prodcons._Acteur;
 import jus.poc.prodcons._Consommateur;
 import jus.poc.prodcons._Producteur;
 
@@ -32,7 +33,7 @@ public class TestProdCons extends Simulateur {
 	public int deviationNombreMoyenNbExemplaire;
     private HashMap<Integer, _Consommateur> consommateurs = new HashMap();
     private HashMap<Integer, _Producteur> producteurs = new HashMap();
-	
+	private HashMap<Integer, _Acteur> acteurs = new HashMap();
 	
 	public TestProdCons(Observateur observateur) {
 		super(observateur);
@@ -56,7 +57,7 @@ public class TestProdCons extends Simulateur {
 		for(i=0;i<nbCons;i++)
 		{
 			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons);
-			consommateurs.put(c.identification(), c);
+			acteurs.put(c.identification(), c);
 			c.setDaemon(true);
 			observateur.newConsommateur(c);
 			c.start();
@@ -66,7 +67,7 @@ public class TestProdCons extends Simulateur {
 		{
 			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, 
 					aleaNbreAProduire.next(), t, aleaTempsProd, aleaNbMes);
-			producteurs.put(p.identification(), p);
+			acteurs.put(p.identification(), p);
 			observateur.newProducteur(p);
 			p.start();
 		}
