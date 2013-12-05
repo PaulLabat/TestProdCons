@@ -39,7 +39,7 @@ public class Producteur extends Acteur implements _Producteur {
 		{
 			try {
 				MessageX msg = new MessageX(identification(),nbMsgProduit, nbMsg.next(), false);
-				System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
+				System.out.println("\tCreation : " + msg + " quantite : " + msg.getNbAConso());
 				tampon.put(this, msg);
 				synchronized(this){
 					nbMsgProduit++; 
@@ -47,7 +47,7 @@ public class Producteur extends Acteur implements _Producteur {
 					observateur.productionMessage(this, msg, wait);
 					//System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
 					//System.out.println("Producteur" + identification()+ " wait "+wait);
-					wait(wait);
+					sleep(wait);
 				}
 				
 			} catch (Exception e) {
@@ -65,16 +65,16 @@ public class Producteur extends Acteur implements _Producteur {
 					while(TestProdCons.consommateurAlive > 0)
 					{
 						try {
-							MessageX msg = new MessageX(identification(),nbMsgProduit, nbMsg.next(), false);
-							System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg + " empoisoné");
+							MessageX msg = new MessageX(identification(),nbMsgProduit, 1, true);
+							System.out.println("\tCreation : "+msg);
 							tampon.put(this, msg);
 							synchronized(this){
 								nbMsgProduit++; 
 								int wait = 10*alea.next();
-								observateur.productionMessage(this, msg, wait);
+								//observateur.productionMessage(this, msg, wait);
 								//System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
 								//System.out.println("Producteur" + identification()+ " wait "+wait);
-								wait(wait);
+								sleep(wait);
 							}
 							
 						} catch (Exception e) {

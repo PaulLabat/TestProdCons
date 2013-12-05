@@ -38,7 +38,7 @@ public class Producteur extends Acteur implements _Producteur {
 		{
 			try {
 				Message msg = new MessageX(identification(),nbMsgProduit);
-				System.out.println("Creation : Producteur "+identification()+" a produit le msg : "+msg);
+				System.out.println("Creation : "+msg);
 				tampon.put(this, msg);
 				
 				synchronized(this){

@@ -49,6 +49,7 @@ public class ProdCons implements Tampon {
 	@Override
 	public Message get(_Consommateur arg0) throws Exception,InterruptedException {
 		MessageX m;
+		
 		verouille.lock();
 		try{
 			while(this.isVide()){

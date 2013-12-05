@@ -34,7 +34,7 @@ public class Consommateur extends Acteur implements _Consommateur {
 		{
 			try {
 				Message msg = tampon.get(this);// recupere le message depuis le tampon
-				System.out.println("\t\tLecture : Consommateur "+identification() + " a lu le message "+msg);
+				System.out.println("\t\tLecture : IDCons "+identification() + " : "+msg);
 				synchronized(this){
 					nbMsgProduit++;
 					int wait = 10*alea.next();

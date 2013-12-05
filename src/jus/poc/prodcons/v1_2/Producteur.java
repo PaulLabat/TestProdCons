@@ -38,13 +38,13 @@ public class Producteur extends Acteur implements _Producteur {
 		{
 			try {
 				Message msg = new MessageX(identification(),nbMsgProduit, false);
-				System.out.println("Creation : Producteur "+identification()+" a produit le msg : "+msg);
+				System.out.println("Creation : "+msg);
 				tampon.put(this, msg);
 				
 				synchronized(this){
 					nbMsgProduit++; 
 					int wait = 10*alea.next();
-					wait(wait);
+					sleep(wait);
 				}
 				
 			} catch (Exception e) {
@@ -63,13 +63,13 @@ public class Producteur extends Acteur implements _Producteur {
 			{
 				try {
 					Message pill = new MessageX(identification(),nbMsgProduit, true);
-					System.out.println("Creation : Producteur "+identification()+" a produit le msg : "+pill + " empoisone");
+					System.out.println("Creation "+pill);
 					tampon.put(this, pill);
 					
 					synchronized(this){
 						nbMsgProduit++; 
 						int wait = 10*alea.next();
-						wait(wait);
+						sleep(wait);
 					}
 					
 				} catch (Exception e) {

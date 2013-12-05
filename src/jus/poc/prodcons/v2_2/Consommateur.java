@@ -35,7 +35,7 @@ public class Consommateur extends Acteur implements _Consommateur {
 		{
 			try {
 				Message msg = tampon.get(this);// recupere le message depuis le tampon
-				System.out.println("\t\tLecture : Consommateur "+identification() + " a lu le message : "+msg);
+				System.out.println("\t\tLecture IDCons "+identification() + " : "+msg);
 				
 				//code pour quitter la boucle si le conso est tué
 				if(msg.toString().contains("poisonPill true"))
@@ -49,7 +49,7 @@ public class Consommateur extends Acteur implements _Consommateur {
 					nbMsgProduit++;
 					int wait = 10*alea.next();
 					//System.out.println("Consommateur "+identification()+" wait " + wait);
-					wait(wait);
+					sleep(wait);
 				}
 				
 				
@@ -58,7 +58,7 @@ public class Consommateur extends Acteur implements _Consommateur {
 				e.printStackTrace();
 			}//
 		}
-		System.out.println("Stop consommateur "+identification());
+		System.out.println("Stop consommateur "+identification() + " ayant lu " + nombreDeMessages() + " messages");
 	}
 	
 	

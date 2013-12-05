@@ -28,7 +28,7 @@ public class MessageX implements Message {
 
 	public String toString()
 	{
-		return "(IDmsg : "+numMsg+", IDprod : "+idProd + " poisonPill "+ poisonPill +")";
+		return "(IDmsg : "+numMsg+", IDprod : "+idProd + ", Qte restante : " + (nbAConso-nbConso) + " poisonPill "+ poisonPill +")";
 	}
 	public void consommation(){
 		nbConso++;
