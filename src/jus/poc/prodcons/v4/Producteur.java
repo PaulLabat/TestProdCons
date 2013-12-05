@@ -56,7 +56,9 @@ public class Producteur extends Acteur implements _Producteur {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
+		System.out.println("Stop : producteur  " + identification());
 	}
 	
 	

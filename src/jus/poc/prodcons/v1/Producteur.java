@@ -53,6 +53,7 @@ public class Producteur extends Acteur implements _Producteur {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("Stop : producteur : " + identification());
 	}
 	
 	

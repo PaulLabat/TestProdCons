@@ -61,6 +61,7 @@ public class TestProdCons extends Simulateur {
 			c.setDaemon(true);
 			observateur.newConsommateur(c);
 			c.start();
+			System.out.println("Start : consommateur : " + c.identification());
 		}
 		
 		for(i=0;i<nbProd;i++)
@@ -70,6 +71,7 @@ public class TestProdCons extends Simulateur {
 			producteurs.put(p.identification(), p);
 			observateur.newProducteur(p);
 			p.start();
+			System.out.println("Start : producteur : " + p.identification());
 		}
 		
 		
