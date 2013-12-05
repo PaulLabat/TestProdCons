@@ -1,4 +1,4 @@
-package jus.poc.prodcons.v3;
+package jus.poc.prodcons.v4_2;
 
 public class Semaphore {
 

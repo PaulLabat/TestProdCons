@@ -1,4 +1,4 @@
-package jus.poc.prodcons.v4;
+package jus.poc.prodcons.v4_2;
 
 import jus.poc.prodcons.Acteur;
 import jus.poc.prodcons.Aleatoire;
@@ -38,7 +38,7 @@ public class Producteur extends Acteur implements _Producteur {
 		while(nbMsgProduit < nbMessage)//la garde
 		{
 			try {
-				MessageX msg = new MessageX(identification(),nbMsgProduit, nbMsg.next());
+				MessageX msg = new MessageX(identification(),nbMsgProduit, nbMsg.next(), false);
 				System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
 				tampon.put(this, msg);
 				synchronized(this){
@@ -56,6 +56,34 @@ public class Producteur extends Acteur implements _Producteur {
 			}
 			
 		}
+		//code qui tue les consommateurs
+				TestProdCons.producteurAlive--;
+				System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+				if(TestProdCons.producteurAlive == 0)
+				{
+					System.out.println("Je suis le dernier prod, je tue tous le monde : id "+ this.identification());
+					while(TestProdCons.consommateurAlive > 0)
+					{
+						try {
+							MessageX msg = new MessageX(identification(),nbMsgProduit, nbMsg.next(), false);
+							System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg + " empoisoné");
+							tampon.put(this, msg);
+							synchronized(this){
+								nbMsgProduit++; 
+								int wait = 10*alea.next();
+								observateur.productionMessage(this, msg, wait);
+								//System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
+								//System.out.println("Producteur" + identification()+ " wait "+wait);
+								wait(wait);
+							}
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						TestProdCons.consommateurAlive--;
+					}
+				}
 		System.out.println("Stop : producteur  " + identification());
 	}
 	

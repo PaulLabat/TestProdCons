@@ -1,4 +1,4 @@
-package jus.poc.prodcons.v1;
+package jus.poc.prodcons.v4_2;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,14 +8,18 @@ import java.util.Map;
 import java.util.Properties;
 
 import jus.poc.prodcons.Aleatoire;
+import jus.poc.prodcons.ControlException;
 import jus.poc.prodcons.Observateur;
 import jus.poc.prodcons.Simulateur;
 import jus.poc.prodcons.Tampon;
+import jus.poc.prodcons._Acteur;
 import jus.poc.prodcons._Consommateur;
 import jus.poc.prodcons._Producteur;
 
 public class TestProdCons extends Simulateur {
 	
+	public static int producteurAlive;
+	public static int consommateurAlive;
 	public int nbProd;
 	public int nbCons;
 	public int nbBuffer;
@@ -29,7 +33,7 @@ public class TestProdCons extends Simulateur {
 	public int deviationNombreMoyenNbExemplaire;
     private HashMap<Integer, _Consommateur> consommateurs = new HashMap();
     private HashMap<Integer, _Producteur> producteurs = new HashMap();
-	
+	private HashMap<Integer, _Acteur> acteurs = new HashMap();
 	
 	public TestProdCons(Observateur observateur) {
 		super(observateur);
@@ -38,25 +42,35 @@ public class TestProdCons extends Simulateur {
 	@Override
 	protected void run() throws Exception {
 		this.init("src/jus/poc/prodcons/options/options1.xml");
-		Tampon t = new ProdCons(nbBuffer);
+		producteurAlive = nbProd;
+		consommateurAlive = nbCons;
+		Tampon t = new ProdCons(nbBuffer, observateur);
 		int i=0;
 		Aleatoire aleaCons = new TirageAlea(tempsMoyenConsommation,deviationTempsMoyenConsommation);
 		Aleatoire aleaTempsProd = new TirageAlea(tempsMoyenProduction, deviationTempsMoyenProduction);
 		Aleatoire aleaNbreAProduire = new TirageAlea(nombreMoyenDeProduction, deviationNombreMoyenDeProduction);
+		Aleatoire aleaNbMes = new Aleatoire(nombreMoyenNbExemplaire, deviationNombreMoyenNbExemplaire);
+		try {
+			observateur.init(nbProd, nbCons, nbBuffer);
+		} catch (ControlException e) {
+			e.printStackTrace();
+		}
 		
 		for(i=0;i<nbCons;i++)
 		{
 			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons);
 			consommateurs.put(c.identification(), c);
-			c.setDaemon(true);
+			observateur.newConsommateur(c);
 			c.start();
 			System.out.println("Start : consommateur : " + c.identification());
 		}
 		
 		for(i=0;i<nbProd;i++)
 		{
-			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, aleaNbreAProduire.next(), t, aleaTempsProd);
+			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, 
+					aleaNbreAProduire.next(), t, aleaTempsProd, aleaNbMes);
 			producteurs.put(p.identification(), p);
+			observateur.newProducteur(p);
 			p.start();
 			System.out.println("Start : producteur : " + p.identification());
 		}

@@ -1,4 +1,4 @@
-package jus.poc.prodcons.v1_2;
+package jus.poc.prodcons.v2_2;
 
 import jus.poc.prodcons.Acteur;
 import jus.poc.prodcons.Aleatoire;
@@ -51,8 +51,7 @@ public class Producteur extends Acteur implements _Producteur {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
+		}		
 		//code qui tue les consommateurs
 		TestProdCons.producteurAlive--;
 		System.out.println("producteurAlive : "+TestProdCons.producteurAlive);

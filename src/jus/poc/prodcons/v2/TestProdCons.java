@@ -1,9 +1,7 @@
 package jus.poc.prodcons.v2;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Map;

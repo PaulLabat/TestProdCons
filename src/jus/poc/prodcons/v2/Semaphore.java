@@ -1,7 +1,5 @@
 package jus.poc.prodcons.v2;
 
-import java.util.ArrayList;
-
 public class Semaphore {
 
 	private int cpt;

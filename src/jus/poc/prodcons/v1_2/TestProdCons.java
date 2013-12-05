@@ -1,9 +1,7 @@
 package jus.poc.prodcons.v1_2;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Map;
@@ -56,7 +54,6 @@ public class TestProdCons extends Simulateur {
 		{
 			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons);
 			consommateurs.put(c.identification(), c);
-			//c.setDaemon(true);
 			c.start();
 			System.out.println("Start : consommateur : " + c.identification());
 		}
