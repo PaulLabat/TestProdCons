@@ -1,4 +1,4 @@
-package jus.poc.prodcons.v1;
+package jus.poc.prodcons.v1_2;
 
 import jus.poc.prodcons.Acteur;
 import jus.poc.prodcons.Aleatoire;
@@ -36,6 +36,15 @@ public class Consommateur extends Acteur implements _Consommateur {
 			try {
 				Message msg = tampon.get(this);// recupere le message depuis le tampon
 				System.out.println("\t\tLecture : Consommateur "+identification() + " a lu le message : "+msg);
+				
+				//code pour quitter la boucle + peut faire plus propre
+				if(msg.toString().contains("poisonPill true"))
+				{
+					break;
+				}
+				
+				
+				
 				synchronized(this){
 					nbMsgProduit++;
 					int wait = 10*alea.next();
@@ -49,6 +58,7 @@ public class Consommateur extends Acteur implements _Consommateur {
 				e.printStackTrace();
 			}//
 		}
+		System.out.println("Stop consommateur "+identification());
 	}
 	
 	
