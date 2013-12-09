@@ -23,9 +23,9 @@ public class ProdCons implements Tampon {
 	public Semaphore mutex;
 	public Observateur obs;
 
-	final Lock verouille;
-	final Condition nonPlein; 
-	final Condition nonVide;
+	private final Lock verouille;
+	private final Condition nonPlein; 
+	private final Condition nonVide;
 
 	public ProdCons(int taille, Observateur obsParam) {
 		msg = new Message[taille];
