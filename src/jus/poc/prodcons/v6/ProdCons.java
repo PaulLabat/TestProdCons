@@ -18,13 +18,15 @@ public class ProdCons implements Tampon {
 	public Semaphore prodLibre;
 	public Semaphore mutex;
 	public Observateur obs;
+	public ObservationControle obstest;
 	
-	public ProdCons(int taille, Observateur obsParam) {
+	public ProdCons(int taille, Observateur obsParam, ObservationControle obsc) {
 		msg = new Message[taille];
 		consoLibre = new Semaphore(0);
 		prodLibre = new Semaphore(taille);
 		mutex = new Semaphore(1);
 		this.obs = obsParam;
+		this.obstest = obsc;
 	}
 
 	/**
@@ -42,6 +44,7 @@ public class ProdCons implements Tampon {
 		mutex.p(); // acce unique au buffer
 		m = msg[debut];
 		obs.retraitMessage(arg0, m);
+		obstest.retraitMessage(arg0, m);
 		debut = (debut + 1) % taille();
 		cpt--;
 		System.out.println("\t\tRecuperation IDCons "+arg0.identification()+" : "+m);
@@ -56,6 +59,7 @@ public class ProdCons implements Tampon {
 		mutex.p(); // blocage du buffer
 		msg[fin] = arg1;
 		obs.depotMessage(arg0, arg1);
+		obstest.depotMessage(arg0, arg1);
 		fin = (fin + 1) % taille();
 		cpt++;
 		System.out.println("\tDepot : "+arg1);

@@ -14,13 +14,16 @@ public class Producteur extends Acteur implements _Producteur {
 	private int nbMsgProduit;
 	private Tampon tampon;
 	private Aleatoire alea;
+	private ObservationControle obst;
 	
-	public Producteur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, int nbMessage, Tampon tampon, Aleatoire alea) throws ControlException {
+	public Producteur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, 
+			int nbMessage, Tampon tampon, Aleatoire alea, ObservationControle obsP) throws ControlException {
 		super(Acteur.typeProducteur, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
 		this.nbMessage = nbMessage;
 		this.alea = alea;
 		this.tampon = tampon;
 		nbMsgProduit = 0;
+		this.obst = obsP;
 	}
 	
 	/**
@@ -38,12 +41,16 @@ public class Producteur extends Acteur implements _Producteur {
 		{
 			try {
 				Message msg = new MessageX(identification(),nbMsgProduit, false);
+				int wait = 10*alea.next();
+				observateur.productionMessage(this, msg, wait);
+				obst.productionMessage(this, msg, wait);
 				System.out.println("\tCreation : "+msg);
 				tampon.put(this, msg);
 				
 				synchronized(this){
 					nbMsgProduit++; 
-					int wait = 10*alea.next();
+					
+
 					sleep(wait);
 				}
 				
@@ -63,11 +70,14 @@ public class Producteur extends Acteur implements _Producteur {
 				try {
 					Message pill = new MessageX(identification(),nbMsgProduit, true);
 					System.out.println("\tCreation : "+pill);
+					int wait = 10*alea.next();
+					observateur.productionMessage(this, pill, wait);
+					obst.productionMessage(this, pill, wait);
+					
 					tampon.put(this, pill);
 					
 					synchronized(this){
 						nbMsgProduit++; 
-						int wait = 10*alea.next();
 						sleep(wait);
 					}
 					

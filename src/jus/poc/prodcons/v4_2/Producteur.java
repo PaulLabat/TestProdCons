@@ -40,11 +40,12 @@ public class Producteur extends Acteur implements _Producteur {
 			try {
 				MessageX msg = new MessageX(identification(),nbMsgProduit, nbMsg.next(), false);
 				System.out.println("\tCreation : " + msg + " quantite : " + msg.getNbAConso());
+				int wait = 10*alea.next();
+				observateur.productionMessage(this, msg, wait);
 				tampon.put(this, msg);
 				synchronized(this){
 					nbMsgProduit++; 
-					int wait = 10*alea.next();
-					observateur.productionMessage(this, msg, wait);
+
 					//System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
 					//System.out.println("Producteur" + identification()+ " wait "+wait);
 					sleep(wait);
@@ -67,10 +68,12 @@ public class Producteur extends Acteur implements _Producteur {
 						try {
 							MessageX msg = new MessageX(identification(),nbMsgProduit, 1, true);
 							System.out.println("\tCreation : "+msg);
+							int wait = 10*alea.next();
+							observateur.productionMessage(this, msg, wait);
 							tampon.put(this, msg);
 							synchronized(this){
 								nbMsgProduit++; 
-								int wait = 10*alea.next();
+								
 								//observateur.productionMessage(this, msg, wait);
 								//System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
 								//System.out.println("Producteur" + identification()+ " wait "+wait);

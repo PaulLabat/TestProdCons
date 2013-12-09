@@ -32,10 +32,11 @@ public class TestProdCons extends Simulateur {
 	public int deviationNombreMoyenNbExemplaire;
     private HashMap<Integer, _Consommateur> consommateurs = new HashMap();
     private HashMap<Integer, _Producteur> producteurs = new HashMap();
+	public ObservationControle obst;
 	
-	
-	public TestProdCons(Observateur observateur) {
+	public TestProdCons(Observateur observateur, ObservationControle obsP) {
 		super(observateur);
+		this.obst = obsP;
 	}
 
 	@Override
@@ -43,13 +44,14 @@ public class TestProdCons extends Simulateur {
 		this.init("src/jus/poc/prodcons/options/options1.xml");
 		producteurAlive = nbProd;
 		consommateurAlive = nbCons;
-		Tampon t = new ProdCons(nbBuffer, observateur);
+		Tampon t = new ProdCons(nbBuffer, observateur, obst);
 		int i=0;
 		Aleatoire aleaCons = new TirageAlea(tempsMoyenConsommation,deviationTempsMoyenConsommation);
 		Aleatoire aleaTempsProd = new TirageAlea(tempsMoyenProduction, deviationTempsMoyenProduction);
 		Aleatoire aleaNbreAProduire = new TirageAlea(nombreMoyenDeProduction, deviationNombreMoyenDeProduction);
 		
 		try {
+			obst.init(nbProd, nbCons, nbBuffer);
 			observateur.init(nbProd, nbCons, nbBuffer);
 		} catch (ControlException e) {
 			e.printStackTrace();
@@ -57,18 +59,21 @@ public class TestProdCons extends Simulateur {
 		
 		for(i=0;i<nbCons;i++)
 		{
-			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons);
+			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons, obst);
 			consommateurs.put(c.identification(), c);
 			observateur.newConsommateur(c);
+			obst.newConsommateur(c);
 			c.start();
 			System.out.println("Start : consommateur : " + c.identification());
 		}
 		
 		for(i=0;i<nbProd;i++)
 		{
-			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, aleaNbreAProduire.next(), t, aleaTempsProd);
+			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, 
+					aleaNbreAProduire.next(), t, aleaTempsProd, obst);
 			producteurs.put(p.identification(), p);
 			observateur.newProducteur(p);
+			obst.newProducteur(p);
 			p.start();
 			System.out.println("Start : producteur : " + p.identification());
 		}
@@ -104,7 +109,7 @@ public class TestProdCons extends Simulateur {
 
 
 	public static void main(String[] args) throws InvalidPropertiesFormatException, IOException {
-		new TestProdCons(new Observateur()).start();
+		new TestProdCons(new Observateur(), new ObservationControle()).start();
 
 	}
 

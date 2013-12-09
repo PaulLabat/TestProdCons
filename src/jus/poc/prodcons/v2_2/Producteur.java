@@ -39,11 +39,12 @@ public class Producteur extends Acteur implements _Producteur {
 			try {
 				Message msg = new MessageX(identification(),nbMsgProduit, false);
 				System.out.println("\tCreation : "+msg);
+				int wait = 10*alea.next();
 				tampon.put(this, msg);
 				
 				synchronized(this){
 					nbMsgProduit++; 
-					int wait = 10*alea.next();
+					
 					sleep(wait);
 				}
 				
@@ -63,11 +64,12 @@ public class Producteur extends Acteur implements _Producteur {
 				try {
 					Message pill = new MessageX(identification(),nbMsgProduit, true);
 					System.out.println("\tCreation : "+pill );
+					int wait = 10*alea.next();
 					tampon.put(this, pill);
 					
 					synchronized(this){
 						nbMsgProduit++; 
-						int wait = 10*alea.next();
+						
 						sleep(wait);
 					}
 					
