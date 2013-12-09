@@ -12,13 +12,13 @@ public class ProdCons implements Tampon {
 	private int debut = 0;
 	private int fin = 0;
 	private int cpt = 0;
-	
+
 	// Creation des 3 Semaphores 
 	public Semaphore consoLibre;
 	public Semaphore prodLibre;
 	public Semaphore mutex;
 	public Observateur obs;
-	
+
 	public ProdCons(int taille, Observateur obsParam) {
 		msg = new Message[taille];
 		consoLibre = new Semaphore(0);
@@ -44,7 +44,7 @@ public class ProdCons implements Tampon {
 		obs.retraitMessage(arg0, m);
 		debut = (debut + 1) % taille();
 		cpt--;
-		System.out.println("\t\tRecuperation IDCons "+arg0.identification()+" : "+m);
+		System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
 		mutex.v(); // deblocage de l'acce au buffer
 		prodLibre.v(); // pour avertir les producteurs
 		return m;
@@ -87,6 +87,6 @@ public class ProdCons implements Tampon {
 	{
 		return cpt == 0;
 	}
-	
+
 
 }

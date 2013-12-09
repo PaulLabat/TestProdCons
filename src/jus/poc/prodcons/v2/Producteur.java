@@ -14,7 +14,7 @@ public class Producteur extends Acteur implements _Producteur {
 	private int nbMsgProduit;
 	private Tampon tampon;
 	private Aleatoire alea;
-	
+
 	public Producteur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, int nbMessage, Tampon tampon, Aleatoire alea) throws ControlException {
 		super(Acteur.typeProducteur, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
 		this.nbMessage = nbMessage;
@@ -22,7 +22,7 @@ public class Producteur extends Acteur implements _Producteur {
 		this.tampon = tampon;
 		nbMsgProduit = 0;
 	}
-	
+
 	/**
 	 * Renvoie le nombre de messages restants à produire
 	 * @return nbMessage - nbMsgProduit
@@ -31,23 +31,23 @@ public class Producteur extends Acteur implements _Producteur {
 	public int nombreDeMessages() {
 		return nbMessage - nbMsgProduit;
 	}
-	
+
 	public void run()
 	{
 		while(nbMsgProduit < nbMessage)//la garde
 		{
 			try {
 				Message msg = new MessageX(identification(),nbMsgProduit, false);
-				System.out.println("\tCreation : "+msg);
+				System.out.println("\t\tCreation : "+msg);
 				int wait = 10*alea.next();
 				tampon.put(this, msg);
-				
+
 				synchronized(this){
 					nbMsgProduit++; 
-					
+
 					sleep(wait);
 				}
-				
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -63,16 +63,16 @@ public class Producteur extends Acteur implements _Producteur {
 			{
 				try {
 					Message pill = new MessageX(identification(),nbMsgProduit, true);
-					System.out.println("\tCreation : "+pill );
+					System.out.println("\t\tCreation : "+pill );
 					int wait = 10*alea.next();
 					tampon.put(this, pill);
-					
+
 					synchronized(this){
 						nbMsgProduit++; 
-						
+
 						sleep(wait);
 					}
-					
+
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -80,10 +80,10 @@ public class Producteur extends Acteur implements _Producteur {
 				TestProdCons.consommateurAlive--;
 			}
 		}
-		
+
 		System.out.println("Stop : producteur : " + identification());
 	}
-	
-	
+
+
 
 }

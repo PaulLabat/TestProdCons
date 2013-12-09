@@ -8,11 +8,11 @@ public class TirageAlea extends Aleatoire {
 		super(moyenne, deviation);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public synchronized int next()
 	{
 		return super.next();
-		
+
 	}
 
 }

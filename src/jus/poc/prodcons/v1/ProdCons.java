@@ -11,8 +11,8 @@ public class ProdCons implements Tampon {
 	private int debut = 0;
 	private int fin = 0;
 	private int cpt = 0;
-	
-	
+
+
 	public ProdCons(int taille) {
 		msg = new Message[taille];
 	}
@@ -34,7 +34,7 @@ public class ProdCons implements Tampon {
 		Message m = msg[debut];
 		debut = (debut + 1) % taille();
 		cpt--;
-		System.out.println("\t\tRecuperation IDCons "+arg0.identification()+" : "+m);
+		System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
 		//System.out.println(cpt);
 		notifyAll();
 		return m;
@@ -47,7 +47,7 @@ public class ProdCons implements Tampon {
 		{
 			wait();
 		}
-		
+
 		msg[fin] = arg1;
 		fin = (fin + 1) % taille();
 		cpt++;
@@ -80,5 +80,5 @@ public class ProdCons implements Tampon {
 	{
 		return cpt == 0;
 	}
-	
+
 }

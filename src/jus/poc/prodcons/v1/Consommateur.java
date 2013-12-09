@@ -13,8 +13,8 @@ public class Consommateur extends Acteur implements _Consommateur {
 	private int nbMsgProduit;
 	private Tampon tampon;
 	private Aleatoire alea;
-	
-	
+
+
 	public Consommateur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, Tampon tampon, Aleatoire alea) throws ControlException {
 		super(Acteur.typeConsommateur, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
 		this.alea = alea;
@@ -27,8 +27,8 @@ public class Consommateur extends Acteur implements _Consommateur {
 	public int nombreDeMessages() {
 		return nbMsgProduit;
 	}
-	
-	
+
+
 	public void run()
 	{
 		while(true)
@@ -36,22 +36,22 @@ public class Consommateur extends Acteur implements _Consommateur {
 			try {
 				Message msg = tampon.get(this);// recupere le message depuis le tampon
 				System.out.println("\t\tLecture IDCons "+identification() + " : "+msg);
-				
+
 				//code pour quitter la boucle
 				if(msg.toString().contains("poisonPill true"))
 				{
 					break;
 				}
-				
-				
-				
+
+
+
 				synchronized(this){
 					nbMsgProduit++;
 					int wait = 10*alea.next();
 					sleep(wait);
 				}
-				
-				
+
+
 			} catch ( Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -59,7 +59,7 @@ public class Consommateur extends Acteur implements _Consommateur {
 		}
 		System.out.println("Stop consommateur "+identification() + " ayant lu " + nombreDeMessages() + " messages");
 	}
-	
-	
+
+
 
 }

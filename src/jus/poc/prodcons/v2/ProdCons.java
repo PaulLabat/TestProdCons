@@ -11,12 +11,12 @@ public class ProdCons implements Tampon {
 	private int debut = 0;
 	private int fin = 0;
 	private int cpt = 0;
-	
+
 	// Creation des 3 Semaphores 
-	public Semaphore consoLibre;
-	public Semaphore prodLibre;
-	public Semaphore mutex;
-	
+	private Semaphore consoLibre;
+	private Semaphore prodLibre;
+	private Semaphore mutex;
+
 	public ProdCons(int taille) {
 		msg = new Message[taille];
 		consoLibre = new Semaphore(0);
@@ -35,12 +35,12 @@ public class ProdCons implements Tampon {
 	@Override
 	public Message get(_Consommateur arg0) throws Exception,InterruptedException {
 		Message m;
-		consoLibre.p(); // on verifie la presence de ressources
+		consoLibre.p();
 		mutex.p(); // accee unique au buffer
 		m = msg[debut];
 		debut = (debut + 1) % taille();
 		cpt--;
-		System.out.println("\t\tRecuperation IDCons "+arg0.identification()+" : "+m);
+		System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
 		mutex.v(); // deblocage de l'acce au buffer
 		prodLibre.v(); // pour avertir les producteurs
 		return m;
@@ -82,6 +82,6 @@ public class ProdCons implements Tampon {
 	{
 		return cpt == 0;
 	}
-	
+
 
 }
