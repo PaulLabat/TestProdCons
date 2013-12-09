@@ -24,10 +24,12 @@ public class ObservationControle {
 			throw new ControlException(p.getClass(), "testProducteurExiste");
 
 		}
+		//System.out.println("Prod existe");
 	}
 
 
 	private void testConsommateurExiste(_Consommateur c) throws ControlException {
+		//System.out.println("conso existe");
 		if (!consommateurs.contains(c)) {
 			throw new ControlException(c.getClass(), "testConsommateurExiste");
 		}
@@ -53,6 +55,7 @@ public class ObservationControle {
             throw new ControlException(this.getClass(), "newProducteur");
             //on a un peu trop de prod
         }
+        //System.out.println("newP");
     }
 
     public void newConsommateur(_Consommateur c) throws ControlException {
@@ -61,6 +64,7 @@ public class ObservationControle {
             throw new ControlException(this.getClass(), "newConsommateur");
             //on a un peu trop de conso cette fois :D
         }
+        //System.out.println("newC");
     }
 
 	public void productionMessage(_Producteur p, Message m, int tps) throws ControlException {
@@ -70,6 +74,7 @@ public class ObservationControle {
 			throw new ControlException(p.getClass(), "productionMessage");
 			//Erreur, le producteur n'a pas déposé le dernier message produit
 		}
+		//System.out.println("prodM");
 		msgNonDepot.put(p, m);
 	}
 
@@ -81,11 +86,12 @@ public class ObservationControle {
 			throw new ControlException(p.getClass(), "depotMessage");
 			//Notre prod n'a pas produit de msg ou ne l'a pas depose.
 		}
+
 		if (nbBuffer < msgWait.size()) {
 			throw new ControlException(p.getClass(), "depotMessage");
 			//on a depasser la taille...
 		}
-
+		//System.out.println("depotM");
 		msgWait.add(m);
 	}
 
@@ -100,7 +106,7 @@ public class ObservationControle {
 			throw new ControlException(c.getClass(), "retraitMessage");
 			//notre consommateur n'a pas consomme le msg qu'il a retire avant
 		}
-
+		//System.out.println("retraitM");
 		msgNonConso.put(c, m);
 	}
 
@@ -112,6 +118,7 @@ public class ObservationControle {
 			throw new ControlException(c.getClass(), "consommationMessage");
 			// notre conso a pas retirer ce message, ou il l'a deja consomme, ou bien il a pas consomme le msg precedent
 		}
+		//System.out.println("consoM");
 	}
 	
 
