@@ -6,18 +6,20 @@ public class MessageX implements Message {
 	
 	private int idProd;
 	private int numMsg;
+	private boolean poisonPill;
 	
-	
-	public MessageX(int idProd, int numMsg) {
+	public MessageX(int idProd, int numMsg, boolean poisonPill) {
 		this.idProd = idProd;
 		this.numMsg = numMsg;
+		this.poisonPill = poisonPill;
 	}
 	
 	public String toString()
 	{
-		return "(IDmsg : "+numMsg+", IDprod : "+idProd +")";
+		return "(IDmsg : "+numMsg+", IDprod : "+idProd + " poisonPill "+ poisonPill +")";
 		
 		
 	}
+	
 
 }

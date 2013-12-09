@@ -37,15 +37,15 @@ public class Producteur extends Acteur implements _Producteur {
 		while(nbMsgProduit < nbMessage)//la garde
 		{
 			try {
-				Message msg = new MessageX(identification(),nbMsgProduit);
-				System.out.println("Creation : Producteur "+identification()+" a produit le msg : "+msg);
+				Message msg = new MessageX(identification(),nbMsgProduit, false);
+				System.out.println("Creation : "+msg);
+				int wait = 10*alea.next();
 				tampon.put(this, msg);
 				
 				synchronized(this){
 					nbMsgProduit++; 
-					int wait = 10*alea.next();
-					//System.out.println("Producteur" + identification()+ " wait "+wait);
-					wait(wait);
+					
+					sleep(wait);
 				}
 				
 			} catch (Exception e) {
@@ -53,6 +53,35 @@ public class Producteur extends Acteur implements _Producteur {
 				e.printStackTrace();
 			}
 		}
+		
+		//code qui tue les consommateurs
+		TestProdCons.producteurAlive--;
+		System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+		if(TestProdCons.producteurAlive == 0)
+		{
+			System.out.println("Je suis le dernier prod, je tue tous le monde : id "+ this.identification());
+			while(TestProdCons.consommateurAlive > 0)
+			{
+				try {
+					Message pill = new MessageX(identification(),nbMsgProduit, true);
+					System.out.println("Creation "+pill);
+					int wait = 10*alea.next();
+					tampon.put(this, pill);
+					
+					synchronized(this){
+						nbMsgProduit++; 
+						
+						sleep(wait);
+					}
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				TestProdCons.consommateurAlive--;
+			}
+		}
+		
 		System.out.println("Stop : producteur : " + identification());
 	}
 	

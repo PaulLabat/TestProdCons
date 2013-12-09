@@ -38,16 +38,17 @@ public class Producteur extends Acteur implements _Producteur {
 		while(nbMsgProduit < nbMessage)//la garde
 		{
 			try {
-				MessageX msg = new MessageX(identification(),nbMsgProduit, nbMsg.next());
-				System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
+				MessageX msg = new MessageX(identification(),nbMsgProduit, nbMsg.next(), false);
+				System.out.println("\tCreation : " + msg + " quantite : " + msg.getNbAConso());
+				int wait = 10*alea.next();
+				observateur.productionMessage(this, msg, wait);
 				tampon.put(this, msg);
 				synchronized(this){
 					nbMsgProduit++; 
-					int wait = 10*alea.next();
-					observateur.productionMessage(this, msg, wait);
+
 					//System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
 					//System.out.println("Producteur" + identification()+ " wait "+wait);
-					wait(wait);
+					sleep(wait);
 				}
 				
 			} catch (Exception e) {
@@ -56,6 +57,36 @@ public class Producteur extends Acteur implements _Producteur {
 			}
 			
 		}
+		//code qui tue les consommateurs
+				TestProdCons.producteurAlive--;
+				System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+				if(TestProdCons.producteurAlive == 0)
+				{
+					System.out.println("Je suis le dernier prod, je tue tous le monde : id "+ this.identification());
+					while(TestProdCons.consommateurAlive > 0)
+					{
+						try {
+							MessageX msg = new MessageX(identification(),nbMsgProduit, 1, true);
+							System.out.println("\tCreation : "+msg);
+							int wait = 10*alea.next();
+							observateur.productionMessage(this, msg, wait);
+							tampon.put(this, msg);
+							synchronized(this){
+								nbMsgProduit++; 
+								
+								//observateur.productionMessage(this, msg, wait);
+								//System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
+								//System.out.println("Producteur" + identification()+ " wait "+wait);
+								sleep(wait);
+							}
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						TestProdCons.consommateurAlive--;
+					}
+				}
 		System.out.println("Stop : producteur  " + identification());
 	}
 	

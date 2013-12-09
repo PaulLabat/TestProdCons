@@ -53,12 +53,12 @@ public class ProdCons implements Tampon {
 			debut = (debut + 1) % taille;
 			//cpt++;
 			//tBuffer--;
-			System.out.println("\t\tConsommateur "+arg0.identification()+" a recupere le msg : "+m);
+			System.out.println("\t\tRecuperation IDCons "+arg0.identification()+" : "+m);
 			mutex.v(); // Lib�ration de l'acce au buffer
 			prodLibre.v(); //Avertissement des producteurs
 			lecProd.v(); // Liberation des prod bloques
 		}else{
-			System.out.println("\t\tConsommateur "+arg0.identification()+" a recupere le msg : "+m);
+			System.out.println("\t\tRecuperation IDCons "+arg0.identification()+" : "+m);
 			mutex.v();
 			consoLibre.v();
 		}
@@ -74,7 +74,7 @@ public class ProdCons implements Tampon {
 		obs.depotMessage(arg0, arg1);
 		fin = (fin + 1) % taille();
 		//cpt++;
-		System.out.println("\tProducteur "+arg0.identification()+" a depose le msg : "+arg1);
+		System.out.println("\tDepot : "+arg1);
 		mutex.v(); // deblocage du buffer
 		consoLibre.v(); // pour avertir les consommateurs
 		lecProd.p(); // blocage du producteur tant qu'un message n'est pas lu X fois.

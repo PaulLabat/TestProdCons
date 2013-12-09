@@ -8,12 +8,13 @@ public class MessageX implements Message {
 	private int numMsg;
 	private int nbConso;
 	private int nbAConso;
+	private boolean poisonPill;
 	
-	
-	public MessageX(int idProd, int numMsg, int nbAConso) {
+	public MessageX(int idProd, int numMsg, int nbAConso, boolean poisonPill) {
 		this.idProd = idProd;
 		this.numMsg = numMsg;
 		this.nbAConso = nbAConso;
+		this.poisonPill = poisonPill;
 		nbConso = 0;
 	}
 	
@@ -27,7 +28,7 @@ public class MessageX implements Message {
 
 	public String toString()
 	{
-		return "(IDmsg : "+numMsg+", IDprod : "+idProd + ")";		
+		return "(IDmsg : "+numMsg+", IDprod : "+idProd + ", Qte restante : " + (nbAConso-nbConso) + " poisonPill "+ poisonPill +")";
 	}
 	public void consommation(){
 		nbConso++;
