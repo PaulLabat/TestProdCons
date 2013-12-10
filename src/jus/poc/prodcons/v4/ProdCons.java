@@ -13,7 +13,7 @@ public class ProdCons implements Tampon {
 	private int fin = 0;
 	private int cpt = 0;
 	//private int tBuffer = 0;
-	
+
 	// Creation des 3 Semaphores 
 	public Semaphore consoLibre;
 	public Semaphore prodLibre;
@@ -21,7 +21,7 @@ public class ProdCons implements Tampon {
 	public Observateur obs;
 	public Semaphore lecProd;
 	public int taille;
-	
+
 	public ProdCons(int taille2, Observateur obsParam) {
 		msg = new Message[taille2];
 		consoLibre = new Semaphore(0);
@@ -62,7 +62,7 @@ public class ProdCons implements Tampon {
 			mutex.v();
 			consoLibre.v();
 		}
-		
+
 		return m;
 	}
 
@@ -104,6 +104,6 @@ public class ProdCons implements Tampon {
 	{
 		return cpt == 0;
 	}
-	
+
 
 }

@@ -17,7 +17,7 @@ import jus.poc.prodcons._Consommateur;
 import jus.poc.prodcons._Producteur;
 
 public class TestProdCons extends Simulateur {
-	
+
 	public static int producteurAlive;
 	public static int consommateurAlive;
 	public int nbProd;
@@ -31,10 +31,10 @@ public class TestProdCons extends Simulateur {
 	public int deviationNombreMoyenDeProduction;
 	public int nombreMoyenNbExemplaire;
 	public int deviationNombreMoyenNbExemplaire;
-    private HashMap<Integer, _Consommateur> consommateurs = new HashMap();
-    private HashMap<Integer, _Producteur> producteurs = new HashMap();
+	private HashMap<Integer, _Consommateur> consommateurs = new HashMap();
+	private HashMap<Integer, _Producteur> producteurs = new HashMap();
 	private HashMap<Integer, _Acteur> acteurs = new HashMap();
-	
+
 	public TestProdCons(Observateur observateur) {
 		super(observateur);
 	}
@@ -55,7 +55,7 @@ public class TestProdCons extends Simulateur {
 		} catch (ControlException e) {
 			e.printStackTrace();
 		}
-		
+
 		for(i=0;i<nbCons;i++)
 		{
 			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons);
@@ -64,7 +64,7 @@ public class TestProdCons extends Simulateur {
 			c.start();
 			System.out.println("Start : consommateur : " + c.identification());
 		}
-		
+
 		for(i=0;i<nbProd;i++)
 		{
 			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, 
@@ -74,21 +74,21 @@ public class TestProdCons extends Simulateur {
 			p.start();
 			System.out.println("Start : producteur : " + p.identification());
 		}
-		
-		
+
+
 
 	}
-	
+
 	/**
-	* Retreave the parameters of the application.
-	* @param file the final name of the file containing the options.
+	 * Retreave the parameters of the application.
+	 * @param file the final name of the file containing the options.
 	 * @throws SecurityException 
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 * @throws IOException 
 	 * @throws InvalidPropertiesFormatException 
-	*/
+	 */
 	protected void init(String file) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException, InvalidPropertiesFormatException, IOException {
 		Properties properties = new Properties();
 		//properties.loadFromXML(ClassLoader.getSystemResourceAsStream(file));
