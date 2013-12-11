@@ -33,7 +33,7 @@ public class Producteur extends Acteur implements _Producteur {
 	}
 	
 	public boolean check(){
-		return nbMsgProduit < nbMessage;
+		return (nbMsgProduit+1) < nbMessage;
 	}
 
 	public void run()
