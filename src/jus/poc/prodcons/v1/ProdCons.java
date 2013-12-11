@@ -49,7 +49,9 @@ public class ProdCons implements Tampon {
 		}
 		if(!(((Producteur)arg0).check())){
 			TestProdCons.producteurAlive--;
+			System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
 		}
+
 		msg[fin] = arg1;
 		fin = (fin + 1) % taille();
 		cpt++;
