@@ -24,19 +24,16 @@ public class ObservationControle {
 			throw new ControlException(p.getClass(), "testProducteurExiste");
 
 		}
-		//System.out.println("Prod existe");
 	}
 
 
 	private void testConsommateurExiste(_Consommateur c) throws ControlException {
-		//System.out.println("conso existe");
 		if (!consommateurs.contains(c)) {
 			throw new ControlException(c.getClass(), "testConsommateurExiste");
 		}
 	}
 
 	public void init(int nbProduc, int nbConsom, int nbBuf) throws ControlException {
-		System.out.println("init " + nbProduc + " " + nbConsom + " " + nbBuf);
 		this.nbBuffer = nbBuf;
 		this.nbConso = nbConsom;
 		this.nbProd = nbProduc;

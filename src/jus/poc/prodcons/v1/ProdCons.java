@@ -34,7 +34,7 @@ public class ProdCons implements Tampon {
 		Message m = msg[debut];
 		debut = (debut + 1) % taille();
 		cpt--;
-		System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
+		Affichage.printRecMsg(arg0, m);
 		//System.out.println(cpt);
 		notifyAll();
 		return m;
@@ -50,7 +50,7 @@ public class ProdCons implements Tampon {
 		msg[fin] = arg1;
 		fin = (fin + 1) % taille();
 		cpt++;
-		System.out.println("\tDepot "+arg1);
+		Affichage.printDepMsg(arg1);
 		//System.out.println(cpt);
 		notifyAll();
 	}

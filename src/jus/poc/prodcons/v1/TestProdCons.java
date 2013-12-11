@@ -29,6 +29,7 @@ public class TestProdCons extends Simulateur {
 	public int deviationNombreMoyenDeProduction;
 	public int nombreMoyenNbExemplaire;
 	public int deviationNombreMoyenNbExemplaire;
+	public static int affichage;
 	private HashMap<Integer, _Consommateur> consommateurs = new HashMap();
 	private HashMap<Integer, _Producteur> producteurs = new HashMap();
 
@@ -53,14 +54,14 @@ public class TestProdCons extends Simulateur {
 			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons);
 			consommateurs.put(c.identification(), c);
 			c.start();
-			System.out.println("Start : consommateur : " + c.identification());
+			Affichage.printStart(c);
 		}
 		for(i=0;i<nbProd;i++)
 		{
 			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, aleaNbreAProduire.next(), t, aleaTempsProd);
 			producteurs.put(p.identification(), p);
 			p.start();
-			System.out.println("Start : producteur : " + p.identification());
+			Affichage.printStart(p);
 		}
 	}
 
@@ -88,8 +89,7 @@ public class TestProdCons extends Simulateur {
 			thisOne.getDeclaredField(key).set(this,value);
 		}
 	}
-
-
+	
 	public static void main(String[] args) throws InvalidPropertiesFormatException, IOException {
 		new TestProdCons(new Observateur()).start();
 
