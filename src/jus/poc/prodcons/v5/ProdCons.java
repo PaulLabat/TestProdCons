@@ -68,8 +68,9 @@ public class ProdCons implements Tampon {
 
 	@Override
 	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
-		System.out.println(arg0.identification());
+		
 		verouille.lock();
+		System.out.println(arg0.identification());
 		try{
 			while(this.isPlein()){
 				nonVide.await();
