@@ -5,8 +5,7 @@ import jus.poc.prodcons.Observateur;
 import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Consommateur;
 import jus.poc.prodcons._Producteur;
-import jus.poc.prodcons.v1.Producteur;
-import jus.poc.prodcons.v1.TestProdCons;
+
 
 public class ProdCons implements Tampon {
 

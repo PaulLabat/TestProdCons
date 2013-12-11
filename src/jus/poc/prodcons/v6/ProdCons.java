@@ -5,6 +5,7 @@ import jus.poc.prodcons.Observateur;
 import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Consommateur;
 import jus.poc.prodcons._Producteur;
+import jus.poc.prodcons.v5.TestProdCons;
 
 public class ProdCons implements Tampon {
 
@@ -47,7 +48,7 @@ public class ProdCons implements Tampon {
 		obstest.retraitMessage(arg0, m);
 		debut = (debut + 1) % taille();
 		cpt--;
-		Affichage.printRecMsg(arg0, m);
+		System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
 		mutex.v(); // deblocage de l'acce au buffer
 		prodLibre.v(); // pour avertir les producteurs
 		return m;
@@ -62,7 +63,7 @@ public class ProdCons implements Tampon {
 		obstest.depotMessage(arg0, arg1);
 		fin = (fin + 1) % taille();
 		cpt++;
-		Affichage.printDepMsg(arg1);
+		System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
 		mutex.v(); // deblocage du buffer
 		consoLibre.v(); // pour avertir les consommateurs
 	}
