@@ -48,7 +48,9 @@ public class Producteur extends Acteur implements _Producteur {
 			}
 		}
 		//code qui tue les consommateurs
-		TestProdCons.producteurAlive--;
+		synchronized(this){
+			TestProdCons.producteurAlive--;
+		}
 		Affichage.countProd();
 		if(TestProdCons.producteurAlive == 0)
 		{

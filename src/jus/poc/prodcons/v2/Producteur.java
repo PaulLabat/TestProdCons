@@ -8,6 +8,7 @@ import jus.poc.prodcons.Observateur;
 import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Producteur;
 import jus.poc.prodcons.v1.Affichage;
+import jus.poc.prodcons.v1.TestProdCons;
 
 public class Producteur extends Acteur implements _Producteur {
 
@@ -54,7 +55,9 @@ public class Producteur extends Acteur implements _Producteur {
 			}
 		}		
 		//code qui tue les consommateurs
-		TestProdCons.producteurAlive--;
+		synchronized(this){
+			TestProdCons.producteurAlive--;
+		}
 		Affichage.countProd();
 		if(TestProdCons.producteurAlive == 0)
 		{

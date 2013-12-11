@@ -44,8 +44,6 @@ public class Consommateur extends Acteur implements _Consommateur {
 					break;
 				}
 
-
-
 					nbMsgProduit++;
 					int wait = 10*alea.next();
 					//System.out.println("Consommateur "+identification()+" wait " + wait);
