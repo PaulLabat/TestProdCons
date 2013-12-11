@@ -35,12 +35,9 @@ public class Consommateur extends Acteur implements _Consommateur {
 		{
 			try {
 				Message msg = tampon.get(this);// recupere le message depuis le tampon
-<<<<<<< HEAD
-				Affichage.printLecMsg(this, msg);
-=======
+
 				System.out.println("\t\tLecture IDCons "+identification() + " : "+msg);
 
->>>>>>> parent of 87ff74d... diverse modifs
 				//code pour quitter la boucle
 				if(msg.toString().contains("poisonPill true"))
 				{
@@ -59,7 +56,7 @@ public class Consommateur extends Acteur implements _Consommateur {
 				e.printStackTrace();
 			}//
 		}
-		Affichage.printStop(this);
+		System.out.println("Stop : consommateur : " + identification() + " ayant consomme " + nbMsgProduit + " messages");
 	}
 
 

@@ -78,12 +78,10 @@ public class Producteur extends Acteur implements _Producteur {
 				TestProdCons.consommateurAlive--;
 			}
 		}
-<<<<<<< HEAD
-		Affichage.printStop(this);
-=======
+
 
 		System.out.println("Stop : producteur : " + identification());
->>>>>>> parent of 87ff74d... diverse modifs
+
 	}
 
 
