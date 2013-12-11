@@ -24,7 +24,7 @@ public class Producteur extends Acteur implements _Producteur {
 	}
 
 	/**
-	 * Renvoie le nombre de messages restants Ã  produire
+	 * Renvoie le nombre de messages restants a  produire
 	 * @return nbMessage - nbMsgProduit
 	 */
 	@Override
@@ -41,17 +41,12 @@ public class Producteur extends Acteur implements _Producteur {
 				System.out.println("\t\tCreation : "+msg);
 				int wait = 10*alea.next();
 				tampon.put(this, msg);
-
 				nbMsgProduit++; 
-
 				sleep(wait);
-
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 		//code qui tue les consommateurs
 		TestProdCons.producteurAlive--;
 		System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
@@ -65,20 +60,14 @@ public class Producteur extends Acteur implements _Producteur {
 					System.out.println("\t\tCreation "+pill);
 					int wait = 10*alea.next();
 					tampon.put(this, pill);
-
 					nbMsgProduit++; 
-
 					sleep(wait);
-
-
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				TestProdCons.consommateurAlive--;
 			}
 		}
-
 		System.out.println("Stop : producteur : " + identification());
 	}
 

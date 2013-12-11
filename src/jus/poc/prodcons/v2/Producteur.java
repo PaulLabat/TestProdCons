@@ -24,7 +24,7 @@ public class Producteur extends Acteur implements _Producteur {
 	}
 
 	/**
-	 * Renvoie le nombre de messages restants à produire
+	 * Renvoie le nombre de messages restants a produire
 	 * @return nbMessage - nbMsgProduit
 	 */
 	@Override

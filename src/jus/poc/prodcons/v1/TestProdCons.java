@@ -48,8 +48,6 @@ public class TestProdCons extends Simulateur {
 		Aleatoire aleaTempsProd = new TirageAlea(tempsMoyenProduction, deviationTempsMoyenProduction);
 		Aleatoire aleaNbreAProduire = new TirageAlea(nombreMoyenDeProduction, deviationNombreMoyenDeProduction);
 
-
-
 		for(i=0;i<nbCons;i++)
 		{
 			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons);
@@ -64,9 +62,6 @@ public class TestProdCons extends Simulateur {
 			p.start();
 			System.out.println("Start : producteur : " + p.identification());
 		}
-
-
-
 	}
 
 	/**

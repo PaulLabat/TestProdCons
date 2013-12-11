@@ -47,7 +47,6 @@ public class ProdCons implements Tampon {
 		{
 			wait();
 		}
-
 		msg[fin] = arg1;
 		fin = (fin + 1) % taille();
 		cpt++;
