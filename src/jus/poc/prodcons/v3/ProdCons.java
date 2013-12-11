@@ -60,6 +60,7 @@ public class ProdCons implements Tampon {
 		obs.depotMessage(arg0, arg1);
 		if(!(((Producteur)arg0).check())){
 			TestProdCons.producteurAlive--;
+			System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
 		}
 		fin = (fin + 1) % taille();
 		cpt++;

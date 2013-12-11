@@ -47,7 +47,6 @@ public class Producteur extends Acteur implements _Producteur {
 				tampon.put(this, msg);
 
 					nbMsgProduit++; 
-
 					sleep(wait);
 				
 

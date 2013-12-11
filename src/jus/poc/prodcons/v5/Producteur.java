@@ -62,15 +62,15 @@ public class Producteur extends Acteur implements _Producteur {
 		synchronized(this){
 			TestProdCons.producteurAlive--;
 		}
-		Affichage.countProd();
+		
 		if(TestProdCons.producteurAlive == 0)
 		{
-			Affichage.printLastSurvivor(this);
+			System.out.println("Je suis le dernier prod, je tue tous le monde : id " + this.identification());
 			while(TestProdCons.consommateurAlive > 0)
 			{
 				try {
 					Message pill = new MessageX(identification(),nbMsgProduit, true);
-					Affichage.printCreaMsg(pill);
+					System.out.println("\t\tCreation : : " + pill);
 					int wait = 10*alea.next();
 					observateur.productionMessage(this, pill, wait);
 					tampon.put(this, pill);
@@ -89,7 +89,7 @@ public class Producteur extends Acteur implements _Producteur {
 			}
 		}
 
-		Affichage.printStop(this);
+		System.out.println("Stop : producteur : " + identification());
 	}
 
 
