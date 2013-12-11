@@ -31,6 +31,10 @@ public class Producteur extends Acteur implements _Producteur {
 	public int nombreDeMessages() {
 		return nbMessage - nbMsgProduit;
 	}
+	
+	public boolean check(){
+		return nbMsgProduit < nbMessage;
+	}
 
 	public void run()
 	{

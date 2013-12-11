@@ -47,7 +47,7 @@ public class ProdCons implements Tampon {
 		{
 			wait();
 		}
-		if(arg0.nombreDeMessages() <= 0){
+		if(!(((Producteur)arg0).check())){
 			TestProdCons.producteurAlive--;
 		}
 		msg[fin] = arg1;
