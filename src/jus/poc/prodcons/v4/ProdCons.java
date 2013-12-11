@@ -20,6 +20,7 @@ public class ProdCons implements Tampon {
 	public Semaphore mutex;
 	public Observateur obs;
 	public Semaphore lecProd;
+	public Semaphore lecCons;
 	public int taille;
 
 	public ProdCons(int taille2, Observateur obsParam) {
@@ -29,6 +30,7 @@ public class ProdCons implements Tampon {
 		this.taille = taille2;
 		mutex = new Semaphore(1);
 		lecProd = new Semaphore(0);
+		lecCons = new Semaphore(0);
 		this.obs = obsParam;
 	}
 
@@ -55,15 +57,16 @@ public class ProdCons implements Tampon {
 			//tBuffer--;
 			System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
 			System.out.println("\tDestruction");
-			mutex.v(); // Lib�ration de l'acce au buffer
+			mutex.v(); // Liberation de l'acce au buffer
 			prodLibre.v(); //Avertissement des producteurs
 			lecProd.v(); // Liberation des prod bloques
 		}else{
 			System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
 			mutex.v();
 			consoLibre.v();
+			lecCons.p();
 		}
-
+		lecCons.v();
 		return m;
 	}
 

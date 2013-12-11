@@ -25,7 +25,7 @@ public class Producteur extends Acteur implements _Producteur {
 	}
 
 	/**
-	 * Renvoie le nombre de messages restants à produire
+	 * Renvoie le nombre de messages restants a produire
 	 * @return nbMessage - nbMsgProduit
 	 */
 	@Override
@@ -43,13 +43,13 @@ public class Producteur extends Acteur implements _Producteur {
 				int wait = 10*alea.next();
 				observateur.productionMessage(this, msg, wait);
 				tampon.put(this, msg);
-				synchronized(this){
-					nbMsgProduit++; 
 
-					//System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
-					//System.out.println("Producteur" + identification()+ " wait "+wait);
-					sleep(wait);
-				}
+				nbMsgProduit++; 
+
+				//System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
+				//System.out.println("Producteur" + identification()+ " wait "+wait);
+				sleep(wait);
+
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -71,14 +71,14 @@ public class Producteur extends Acteur implements _Producteur {
 					int wait = 10*alea.next();
 					observateur.productionMessage(this, msg, wait);
 					tampon.put(this, msg);
-					synchronized(this){
-						nbMsgProduit++; 
 
-						//observateur.productionMessage(this, msg, wait);
-						//System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
-						//System.out.println("Producteur" + identification()+ " wait "+wait);
-						sleep(wait);
-					}
+					nbMsgProduit++; 
+
+					//observateur.productionMessage(this, msg, wait);
+					//System.out.println("Creation : Producteur "+identification()+" a produit le msg en quantite " + msg.getNbAConso() + " : "+msg);
+					//System.out.println("Producteur" + identification()+ " wait "+wait);
+					sleep(wait);
+
 
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

@@ -42,11 +42,9 @@ public class Producteur extends Acteur implements _Producteur {
 				int wait = 10*alea.next();
 				tampon.put(this, msg);
 
-				synchronized(this){
-					nbMsgProduit++; 
+				nbMsgProduit++; 
 
-					sleep(wait);
-				}
+				sleep(wait);
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -68,11 +66,10 @@ public class Producteur extends Acteur implements _Producteur {
 					int wait = 10*alea.next();
 					tampon.put(this, pill);
 
-					synchronized(this){
-						nbMsgProduit++; 
+					nbMsgProduit++; 
 
-						sleep(wait);
-					}
+					sleep(wait);
+
 
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

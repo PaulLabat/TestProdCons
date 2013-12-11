@@ -45,12 +45,12 @@ public class Consommateur extends Acteur implements _Consommateur {
 
 
 
-				synchronized(this){
-					nbMsgProduit++;
-					int wait = 10*alea.next();
-					observateur.consommationMessage(this, msg, wait);
-					sleep(wait);
-				}
+
+				nbMsgProduit++;
+				int wait = 10*alea.next();
+				observateur.consommationMessage(this, msg, wait);
+				sleep(wait);
+
 
 
 			} catch ( Exception e) {

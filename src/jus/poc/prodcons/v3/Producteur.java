@@ -43,11 +43,11 @@ public class Producteur extends Acteur implements _Producteur {
 				observateur.productionMessage(this, msg, wait);
 				tampon.put(this, msg);
 
-				synchronized(this){
-					nbMsgProduit++; 
 
-					sleep(wait);
-				}
+				nbMsgProduit++; 
+
+				sleep(wait);
+
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -69,11 +69,11 @@ public class Producteur extends Acteur implements _Producteur {
 					observateur.productionMessage(this, pill, wait);
 					tampon.put(this, pill);
 
-					synchronized(this){
-						nbMsgProduit++; 
 
-						sleep(wait);
-					}
+					nbMsgProduit++; 
+
+					sleep(wait);
+
 
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

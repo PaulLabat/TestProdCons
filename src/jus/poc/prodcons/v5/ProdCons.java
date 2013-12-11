@@ -51,7 +51,7 @@ public class ProdCons implements Tampon {
 		MessageX m;
 		verouille.lock();
 		try{
-			while(this.isVide()){
+			while(isVide()){
 				nonPlein.await();
 			}
 			m = (MessageX) msg[debut];
@@ -59,7 +59,9 @@ public class ProdCons implements Tampon {
 			debut = (debut + 1) % taille();
 			cpt--;
 			System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
-			nonVide.signal();
+			if(isVide()){
+				nonVide.signal();
+			}
 			return m;
 		}finally{
 			verouille.unlock();
@@ -68,11 +70,11 @@ public class ProdCons implements Tampon {
 
 	@Override
 	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
-		
+
 		verouille.lock();
 		System.out.println(arg0.identification());
 		try{
-			while(this.isPlein()){
+			while(isPlein()){
 				nonVide.await();
 			}
 			msg[fin] = arg1;
@@ -80,7 +82,9 @@ public class ProdCons implements Tampon {
 			fin = (fin + 1) % taille();
 			cpt++;
 			System.out.println("\tDepot : " + arg1);
-			nonPlein.signal();
+			if(isPlein()){
+				nonPlein.signal();
+			}
 		}finally{
 			verouille.unlock();
 		}
