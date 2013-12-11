@@ -39,7 +39,7 @@ public class Producteur extends Acteur implements _Producteur {
 		{
 			try {
 				MessageX msg = new MessageX(identification(),nbMsgProduit, nbMsg.next(), false);
-				System.out.println("\tCreation : " + msg + " quantite : " + msg.getNbAConso());
+				System.out.println("\t\tCreation : " + msg + " quantite : " + msg.getNbAConso());
 				int wait = 10*alea.next();
 				observateur.productionMessage(this, msg, wait);
 				tampon.put(this, msg);
@@ -67,7 +67,7 @@ public class Producteur extends Acteur implements _Producteur {
 			{
 				try {
 					MessageX msg = new MessageX(identification(),nbMsgProduit, 1, true);
-					System.out.println("\tCreation : "+msg);
+					System.out.println("\t\tCreation : "+msg);
 					int wait = 10*alea.next();
 					observateur.productionMessage(this, msg, wait);
 					tampon.put(this, msg);

@@ -47,7 +47,7 @@ public class ProdCons implements Tampon {
 		obstest.retraitMessage(arg0, m);
 		debut = (debut + 1) % taille();
 		cpt--;
-		System.out.println("\t\tRecuperation IDCons "+arg0.identification()+" : "+m);
+		System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
 		mutex.v(); // deblocage de l'acce au buffer
 		prodLibre.v(); // pour avertir les producteurs
 		return m;

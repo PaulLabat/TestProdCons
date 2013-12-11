@@ -33,7 +33,7 @@ public class ProdCons implements Tampon {
 		prodLibre = new Semaphore(taille);
 		mutex = new Semaphore(1);
 		this.obs = obsParam;
-		this.verouille = new ReentrantLock();
+		this.verouille = new ReentrantLock(true);
 		this.nonPlein = verouille.newCondition();
 		this.nonVide = verouille.newCondition();
 	}
@@ -52,14 +52,14 @@ public class ProdCons implements Tampon {
 		verouille.lock();
 		try{
 			while(this.isVide()){
-				nonVide.await();
+				nonPlein.await();
 			}
 			m = (MessageX) msg[debut];
 			obs.retraitMessage(arg0, m);
 			debut = (debut + 1) % taille();
 			cpt--;
-			System.out.println("\t\tRecuperation IDCons "+arg0.identification()+" : "+m);
-			nonPlein.signal();
+			System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
+			nonVide.signal();
 			return m;
 		}finally{
 			verouille.unlock();
@@ -68,17 +68,18 @@ public class ProdCons implements Tampon {
 
 	@Override
 	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
+		System.out.println(arg0.identification());
 		verouille.lock();
 		try{
 			while(this.isPlein()){
-				nonPlein.await();
+				nonVide.await();
 			}
 			msg[fin] = arg1;
 			obs.depotMessage(arg0, arg1);
 			fin = (fin + 1) % taille();
 			cpt++;
 			System.out.println("\tDepot : " + arg1);
-			nonVide.signal();
+			nonPlein.signal();
 		}finally{
 			verouille.unlock();
 		}

@@ -44,7 +44,7 @@ public class Producteur extends Acteur implements _Producteur {
 				int wait = 10*alea.next();
 				observateur.productionMessage(this, msg, wait);
 				obst.productionMessage(this, msg, wait);
-				System.out.println("\tCreation : "+msg);
+				System.out.println("\t\tCreation : "+msg);
 				tampon.put(this, msg);
 				
 				synchronized(this){
@@ -69,7 +69,7 @@ public class Producteur extends Acteur implements _Producteur {
 			{
 				try {
 					Message pill = new MessageX(identification(),nbMsgProduit, true);
-					System.out.println("\tCreation : "+pill);
+					System.out.println("\t\tCreation : "+pill);
 					int wait = 10*alea.next();
 					observateur.productionMessage(this, pill, wait);
 					obst.productionMessage(this, pill, wait);
