@@ -47,7 +47,7 @@ public class Producteur extends Acteur implements _Producteur {
 				int wait = 10 * alea.next();
 				observateur.productionMessage(this, msg, wait);
 				obst.productionMessage(this, msg, wait);
-				System.out.println("\t\tCreation : " + msg);
+				Affichage.printCreaMsg(msg);
 				tampon.put(this, msg);
 
 				nbMsgProduit++;
@@ -60,16 +60,14 @@ public class Producteur extends Acteur implements _Producteur {
 		}
 		// code qui tue les consommateurs
 		TestProdCons.producteurAlive--;
-		System.out.println("producteurAlive : " + TestProdCons.producteurAlive);
+		Affichage.countProd();
 		if (TestProdCons.producteurAlive == 0) {
-			System.out
-					.println("Je suis le dernier prod, je tue tous le monde : id "
-							+ this.identification());
+			Affichage.printLastSurvivor(this);
 			while (TestProdCons.consommateurAlive > 0) {
 				try {
 					Message pill = new MessageX(identification(), nbMsgProduit,
 							true);
-					System.out.println("\t\tCreation : " + pill);
+					Affichage.printCreaMsg(pill);
 					int wait = 10 * alea.next();
 					observateur.productionMessage(this, pill, wait);
 					obst.productionMessage(this, pill, wait);
@@ -87,7 +85,7 @@ public class Producteur extends Acteur implements _Producteur {
 			}
 		}
 
-		System.out.println("Stop : producteur : " + identification());
+		Affichage.printStop(this);
 	}
 
 }

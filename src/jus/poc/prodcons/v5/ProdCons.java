@@ -50,6 +50,7 @@ public class ProdCons implements Tampon {
 	public Message get(_Consommateur arg0) throws Exception,InterruptedException {
 		MessageX m;
 		verouille.lock();
+		Affichage.printPasLock2(arg0);
 		try{
 			while(isVide()){
 				nonPlein.await();
@@ -58,7 +59,7 @@ public class ProdCons implements Tampon {
 			obs.retraitMessage(arg0, m);
 			debut = (debut + 1) % taille();
 			cpt--;
-			System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
+			Affichage.printRecMsg(arg0, m);
 			if(isVide()){
 				nonVide.signal();
 			}
@@ -70,9 +71,8 @@ public class ProdCons implements Tampon {
 
 	@Override
 	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
-
 		verouille.lock();
-		System.out.println(arg0.identification());
+		Affichage.printPasLock(arg0);
 		try{
 			while(isPlein()){
 				nonVide.await();
@@ -81,7 +81,7 @@ public class ProdCons implements Tampon {
 			obs.depotMessage(arg0, arg1);
 			fin = (fin + 1) % taille();
 			cpt++;
-			System.out.println("\tDepot : " + arg1);
+			Affichage.printDepMsg(arg1);
 			if(isPlein()){
 				nonPlein.signal();
 			}
