@@ -31,6 +31,10 @@ public class Producteur extends Acteur implements _Producteur {
 	public int nombreDeMessages() {
 		return nbMessage - nbMsgProduit;
 	}
+	
+	public boolean check(){
+		return (nbMsgProduit+1) < nbMessage;
+	}
 
 	public void run()
 	{
@@ -55,7 +59,7 @@ public class Producteur extends Acteur implements _Producteur {
 			}
 		}		
 		//code qui tue les consommateurs
-		TestProdCons.producteurAlive--;
+		//TestProdCons.producteurAlive--;
 		System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
 		if(TestProdCons.producteurAlive == 0)
 		{

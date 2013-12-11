@@ -33,13 +33,16 @@ public class Producteur extends Acteur implements _Producteur {
 		return nbMessage - nbMsgProduit;
 	}
 
+	public boolean check(){
+		return (nbMsgProduit+1) < nbMessage;
+	}
 	public void run()
 	{
 		while(nbMsgProduit < nbMessage)//la garde
 		{
 			try {
 				Message msg = new MessageX(identification(),nbMsgProduit, false);
-				Affichage.printCreaMsg(msg);
+				System.out.println("\t\tCreation : "+msg);
 				int wait = 10*alea.next();
 				observateur.productionMessage(this, msg, wait);
 				tampon.put(this, msg);

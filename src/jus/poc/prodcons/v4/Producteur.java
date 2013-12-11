@@ -60,7 +60,7 @@ public class Producteur extends Acteur implements _Producteur {
 		}
 		//code qui tue les consommateurs
 
-		TestProdCons.producteurAlive--;
+		//TestProdCons.producteurAlive--;
 
 		System.out.println("producteur alive : " + TestProdCons.producteurAlive);
 		if(TestProdCons.producteurAlive == 0)

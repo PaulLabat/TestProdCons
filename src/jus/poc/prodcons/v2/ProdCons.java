@@ -4,6 +4,8 @@ import jus.poc.prodcons.Message;
 import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Consommateur;
 import jus.poc.prodcons._Producteur;
+import jus.poc.prodcons.v1.Producteur;
+import jus.poc.prodcons.v1.TestProdCons;
 
 public class ProdCons implements Tampon {
 
@@ -50,6 +52,9 @@ public class ProdCons implements Tampon {
 	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
 		prodLibre.p();
 		mutex.p(); // blocage du buffer
+		if(!(((Producteur)arg0).check())){
+			TestProdCons.producteurAlive--;
+		}
 		msg[fin] = arg1;
 		fin = (fin + 1) % taille();
 		cpt++;

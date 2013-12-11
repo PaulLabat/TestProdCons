@@ -9,6 +9,8 @@ import jus.poc.prodcons.Observateur;
 import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Consommateur;
 import jus.poc.prodcons._Producteur;
+import jus.poc.prodcons.v1.Producteur;
+import jus.poc.prodcons.v1.TestProdCons;
 
 public class ProdCons implements Tampon {
 
@@ -50,7 +52,6 @@ public class ProdCons implements Tampon {
 	public Message get(_Consommateur arg0) throws Exception,InterruptedException {
 		MessageX m;
 		verouille.lock();
-		Affichage.printPasLock2(arg0);
 		try{
 			while(isVide()){
 				nonPlein.await();
@@ -59,7 +60,7 @@ public class ProdCons implements Tampon {
 			obs.retraitMessage(arg0, m);
 			debut = (debut + 1) % taille();
 			cpt--;
-			Affichage.printRecMsg(arg0, m);
+			System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
 			if(isVide()){
 				nonVide.signal();
 			}
@@ -73,16 +74,19 @@ public class ProdCons implements Tampon {
 	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
 
 		verouille.lock();
-		Affichage.printPasLock(arg0);
+		System.out.println(arg0.identification());
 		try{
 			while(isPlein()){
 				nonVide.await();
 			}
 			msg[fin] = arg1;
 			obs.depotMessage(arg0, arg1);
+			if(!(((Producteur)arg0).check())){
+				TestProdCons.producteurAlive--;
+			}
 			fin = (fin + 1) % taille();
 			cpt++;
-			Affichage.printDepMsg(arg1);
+			System.out.println("\tDepot : "+arg1);
 			if(isPlein()){
 				nonPlein.signal();
 			}
