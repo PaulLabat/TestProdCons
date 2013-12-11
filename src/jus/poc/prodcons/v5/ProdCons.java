@@ -71,6 +71,7 @@ public class ProdCons implements Tampon {
 
 	@Override
 	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
+
 		verouille.lock();
 		Affichage.printPasLock(arg0);
 		try{

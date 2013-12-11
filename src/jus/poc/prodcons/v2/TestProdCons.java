@@ -13,7 +13,6 @@ import jus.poc.prodcons.Simulateur;
 import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Consommateur;
 import jus.poc.prodcons._Producteur;
-import jus.poc.prodcons.v1.Affichage;
 
 public class TestProdCons extends Simulateur {
 
@@ -30,7 +29,6 @@ public class TestProdCons extends Simulateur {
 	public int deviationNombreMoyenDeProduction;
 	public int nombreMoyenNbExemplaire;
 	public int deviationNombreMoyenNbExemplaire;
-	public static int affichage;
 	private HashMap<Integer, _Consommateur> consommateurs = new HashMap();
 	private HashMap<Integer, _Producteur> producteurs = new HashMap();
 
@@ -55,7 +53,7 @@ public class TestProdCons extends Simulateur {
 			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons);
 			consommateurs.put(c.identification(), c);
 			c.start();
-			Affichage.printStart(c);
+			System.out.println("Start : consommateur : " + c.identification());
 		}
 
 		for(i=0;i<nbProd;i++)
@@ -63,7 +61,7 @@ public class TestProdCons extends Simulateur {
 			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, aleaNbreAProduire.next(), t, aleaTempsProd);
 			producteurs.put(p.identification(), p);
 			p.start();
-			Affichage.printStart(p);
+			System.out.println("Start : producteur : " + p.identification());
 		}
 
 

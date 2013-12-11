@@ -7,7 +7,6 @@ import jus.poc.prodcons.Message;
 import jus.poc.prodcons.Observateur;
 import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Consommateur;
-import jus.poc.prodcons.v1.Affichage;
 
 public class Consommateur extends Acteur implements _Consommateur {
 
@@ -36,7 +35,7 @@ public class Consommateur extends Acteur implements _Consommateur {
 		{
 			try {
 				Message msg = tampon.get(this);// recupere le message depuis le tampon
-				Affichage.printLecMsg(this, msg);
+				System.out.println("\t\tLecture IDCons "+identification() + " : "+msg);
 
 				//code pour quitter la boucle si le conso est tué
 				if(msg.toString().contains("poisonPill true"))
@@ -59,7 +58,7 @@ public class Consommateur extends Acteur implements _Consommateur {
 				e.printStackTrace();
 			}//
 		}
-		Affichage.printStop(this);
+		System.out.println("Stop consommateur "+identification() + " ayant lu " + nombreDeMessages() + " messages");
 	}
 
 

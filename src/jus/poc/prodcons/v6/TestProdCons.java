@@ -30,7 +30,6 @@ public class TestProdCons extends Simulateur {
 	public int deviationNombreMoyenDeProduction;
 	public int nombreMoyenNbExemplaire;
 	public int deviationNombreMoyenNbExemplaire;
-	public static int affichage;
     private HashMap<Integer, _Consommateur> consommateurs = new HashMap();
     private HashMap<Integer, _Producteur> producteurs = new HashMap();
 	public ObservationControle obst;
@@ -65,7 +64,7 @@ public class TestProdCons extends Simulateur {
 			observateur.newConsommateur(c);
 			obst.newConsommateur(c);
 			c.start();
-			Affichage.printStart(c);
+			System.out.println("Start : consommateur : " + c.identification());
 		}
 		
 		for(i=0;i<nbProd;i++)
@@ -76,7 +75,7 @@ public class TestProdCons extends Simulateur {
 			observateur.newProducteur(p);
 			obst.newProducteur(p);
 			p.start();
-			Affichage.printStop(p);
+			System.out.println("Start : producteur : " + p.identification());
 		}
 		
 		

@@ -7,8 +7,6 @@ import jus.poc.prodcons.Message;
 import jus.poc.prodcons.Observateur;
 import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Producteur;
-import jus.poc.prodcons.v1.Affichage;
-import jus.poc.prodcons.v1.TestProdCons;
 
 public class Producteur extends Acteur implements _Producteur {
 
@@ -40,7 +38,7 @@ public class Producteur extends Acteur implements _Producteur {
 		{
 			try {
 				Message msg = new MessageX(identification(),nbMsgProduit, false);
-				Affichage.printCreaMsg(msg);
+				System.out.println("\t\tCreation : "+msg);
 				int wait = 10*alea.next();
 				observateur.productionMessage(this, msg, wait);
 				tampon.put(this, msg);
@@ -57,22 +55,23 @@ public class Producteur extends Acteur implements _Producteur {
 			}
 		}		
 		//code qui tue les consommateurs
-		synchronized(this){
-			TestProdCons.producteurAlive--;
-		}
-		Affichage.countProd();
+		TestProdCons.producteurAlive--;
+		System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
 		if(TestProdCons.producteurAlive == 0)
 		{
-			Affichage.printLastSurvivor(this);
+			System.out.println("Je suis le dernier prod, je tue tous le monde : id "+ this.identification());
 			while(TestProdCons.consommateurAlive > 0)
 			{
 				try {
 					Message pill = new MessageX(identification(),nbMsgProduit, true);
-					Affichage.printCreaMsg(pill);
+					System.out.println("\t\tCreation : "+pill);
 					int wait = 10*alea.next();
 					observateur.productionMessage(this, pill, wait);
 					tampon.put(this, pill);
+
+
 					nbMsgProduit++; 
+
 					sleep(wait);
 
 
@@ -84,7 +83,7 @@ public class Producteur extends Acteur implements _Producteur {
 			}
 		}
 
-		Affichage.printStop(this);
+		System.out.println("Stop : producteur : " + identification());
 	}
 
 

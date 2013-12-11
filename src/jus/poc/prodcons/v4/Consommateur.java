@@ -37,16 +37,21 @@ public class Consommateur extends Acteur implements _Consommateur {
 				Message msg = tampon.get(this);// recupere le message depuis le tampon
 				Affichage.printLecMsg(this, msg);
 
-				//code pour quitter la boucle si le conso est tue
+				//code pour quitter la boucle si le conso est tué
 				if(msg.toString().contains("poisonPill true"))
 				{
 					break;
 				}
 
+
+
+
 				nbMsgProduit++;
 				int wait = 10*alea.next();
 				observateur.consommationMessage(this, msg, wait);
 				sleep(wait);
+
+
 
 			} catch ( Exception e) {
 				// TODO Auto-generated catch block
