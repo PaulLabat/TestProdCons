@@ -29,6 +29,7 @@ public class TestProdCons extends Simulateur {
 	public int deviationNombreMoyenDeProduction;
 	public int nombreMoyenNbExemplaire;
 	public int deviationNombreMoyenNbExemplaire;
+	public int affichage;
 	private HashMap<Integer, _Consommateur> consommateurs = new HashMap();
 	private HashMap<Integer, _Producteur> producteurs = new HashMap();
 

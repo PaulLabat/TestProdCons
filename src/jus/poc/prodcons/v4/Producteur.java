@@ -65,8 +65,6 @@ public class Producteur extends Acteur implements _Producteur {
 		//code qui tue les consommateurs
 
 		//TestProdCons.producteurAlive--;
-
-		//System.out.println("producteur alive : " + TestProdCons.producteurAlive);
 		if(TestProdCons.producteurAlive == 0)
 		{
 			System.out.println("Je suis le dernier prod, je tue tous le monde : id " + this.identification());

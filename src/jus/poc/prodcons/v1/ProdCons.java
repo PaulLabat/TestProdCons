@@ -11,10 +11,11 @@ public class ProdCons implements Tampon {
 	private int debut = 0;
 	private int fin = 0;
 	private int cpt = 0;
+	private int affichage = 0;
 
-
-	public ProdCons(int taille) {
+	public ProdCons(int taille, int affichage) {
 		msg = new Message[taille];
+		this.affichage = affichage;
 	}
 
 	/**
@@ -34,7 +35,9 @@ public class ProdCons implements Tampon {
 		Message m = msg[debut];
 		debut = (debut + 1) % taille();
 		cpt--;
-		System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
+		if(this.affichage == 1){
+			System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
+		}
 		//System.out.println(cpt);
 		notifyAll();
 		return m;
@@ -49,13 +52,17 @@ public class ProdCons implements Tampon {
 		}
 		if(!(((Producteur)arg0).check())){
 			TestProdCons.producteurAlive--;
-			System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+			if(affichage == 1){
+				System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+			}
 		}
 
 		msg[fin] = arg1;
 		fin = (fin + 1) % taille();
 		cpt++;
-		System.out.println("\tDepot "+arg1);
+		if(affichage == 1){
+			System.out.println("\tDepot "+arg1);
+		}
 		//System.out.println(cpt);
 		notifyAll();
 	}
