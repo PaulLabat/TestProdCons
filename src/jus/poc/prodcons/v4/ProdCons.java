@@ -57,7 +57,7 @@ public class ProdCons implements Tampon {
 			//cpt++;
 			//tBuffer--;
 			System.out.println("\tRecuperation IDCons " + arg0.identification() + " : " + m);
-			System.out.println("\tDestrcution");
+			System.out.println("\tDestruction");
 			mutex.v(); // Liberation de l'acce au buffer
 			prodLibre.v(); //Avertissement des producteurs
 			lecProd.v(); // Liberation des prod bloques
