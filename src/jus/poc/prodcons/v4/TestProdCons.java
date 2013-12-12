@@ -45,7 +45,7 @@ public class TestProdCons extends Simulateur {
 		this.init("src/jus/poc/prodcons/options/options3.xml");
 		producteurAlive = nbProd;
 		consommateurAlive = nbCons;
-		Tampon t = new ProdCons(nbBuffer, observateur);
+		Tampon t = new ProdCons(nbBuffer, observateur, affichage);
 		int i=0;
 		Aleatoire aleaCons = new TirageAlea(tempsMoyenConsommation,deviationTempsMoyenConsommation);
 		Aleatoire aleaTempsProd = new TirageAlea(tempsMoyenProduction, deviationTempsMoyenProduction);
@@ -59,21 +59,25 @@ public class TestProdCons extends Simulateur {
 
 		for(i=0;i<nbCons;i++)
 		{
-			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons);
+			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons, affichage);
 			consommateurs.put(c.identification(), c);
 			observateur.newConsommateur(c);
 			c.start();
-			System.out.println("Start : consommateur : " + c.identification());
+			if(affichage == 1){
+				System.out.println("Start : consommateur : " + c.identification());
+			}
 		}
 
 		for(i=0;i<nbProd;i++)
 		{
 			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, 
-					aleaNbreAProduire.next(), t, aleaTempsProd, aleaNbMes);
+					aleaNbreAProduire.next(), t, aleaTempsProd, aleaNbMes, affichage);
 			producteurs.put(p.identification(), p);
 			observateur.newProducteur(p);
 			p.start();
-			System.out.println("Start : producteur : " + p.identification());
+			if(affichage == 1){
+				System.out.println("Start : producteur : " + p.identification());
+			}
 		}
 
 
@@ -100,7 +104,9 @@ public class TestProdCons extends Simulateur {
 		for(Map.Entry<Object,Object> entry : properties.entrySet()) {
 			key = (String)entry.getKey();
 			value = Integer.parseInt((String)entry.getValue());
-			System.out.println("key " + key+ " valeurs : "+value);
+			if(affichage == 1){
+				System.out.println("key " + key+ " valeurs : "+value);
+			}
 			thisOne.getDeclaredField(key).set(this,value);
 		}
 	}

@@ -13,6 +13,7 @@ public class ProdCons implements Tampon {
 	private int debut = 0;
 	private int fin = 0;
 	private int cpt = 0;
+	private int affichage;
 	//private int tBuffer = 0;
 
 	// Creation des 3 Semaphores 
@@ -24,7 +25,7 @@ public class ProdCons implements Tampon {
 	public Semaphore lecCons;
 	public int taille;
 
-	public ProdCons(int taille2, Observateur obsParam) {
+	public ProdCons(int taille2, Observateur obsParam, int affichage) {
 		msg = new Message[taille2];
 		consoLibre = new Semaphore(0);
 		prodLibre = new Semaphore(taille2);
@@ -33,6 +34,7 @@ public class ProdCons implements Tampon {
 		lecProd = new Semaphore(0);
 		lecCons = new Semaphore(0);
 		this.obs = obsParam;
+		this.affichage = affichage;
 	}
 
 	/**
@@ -56,13 +58,17 @@ public class ProdCons implements Tampon {
 			debut = (debut + 1) % taille;
 			//cpt++;
 			//tBuffer--;
-			System.out.println("\tRecuperation IDCons " + arg0.identification() + " : " + m);
-			System.out.println("\tDestruction");
+			if(affichage == 1){
+				System.out.println("\tRecuperation IDCons " + arg0.identification() + " : " + m);
+				System.out.println("\tDestruction");
+			}
 			mutex.v(); // Liberation de l'acce au buffer
 			prodLibre.v(); //Avertissement des producteurs
 			lecProd.v(); // Liberation des prod bloques
 		}else{
-			System.out.println("\tRecuperation IDCons " + arg0.identification() + " : " + m);
+			if(affichage == 1){
+				System.out.println("\tRecuperation IDCons " + arg0.identification() + " : " + m);
+			}
 			mutex.v();
 			consoLibre.v();
 			lecCons.p();
@@ -81,9 +87,13 @@ public class ProdCons implements Tampon {
 		//cpt++;
 		if(!(((Producteur)arg0).check())){
 			TestProdCons.producteurAlive--;
-			System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+			if(affichage == 1){
+				System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+			}
 		}
-		System.out.println("\tDepot : " + arg1);
+		if(affichage == 1){
+			System.out.println("\tDepot : " + arg1);
+		}
 		mutex.v(); // deblocage du buffer
 		consoLibre.v(); // pour avertir les consommateurs
 		lecProd.p(); // blocage du producteur tant qu'un message n'est pas lu X fois.

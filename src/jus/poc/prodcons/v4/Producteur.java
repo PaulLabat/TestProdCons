@@ -14,14 +14,16 @@ public class Producteur extends Acteur implements _Producteur {
 	private Tampon tampon;
 	private Aleatoire alea;
 	private Aleatoire nbMsg;
+	private int affichage;
 
-	public Producteur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, int nbMessage, Tampon tampon, Aleatoire alea, Aleatoire nbMes) throws ControlException {
+	public Producteur(Observateur observateur, int moyenneTempsDeTraitement, int deviationTempsDeTraitement, int nbMessage, Tampon tampon, Aleatoire alea, Aleatoire nbMes, int affichage) throws ControlException {
 		super(Acteur.typeProducteur, observateur, moyenneTempsDeTraitement, deviationTempsDeTraitement);
 		this.nbMessage = nbMessage;
 		this.alea = alea;
 		this.tampon = tampon;
 		this.nbMsg = nbMes;
 		nbMsgProduit = 0;
+		this.affichage = affichage;
 	}
 
 	/**
@@ -32,7 +34,7 @@ public class Producteur extends Acteur implements _Producteur {
 	public int nombreDeMessages() {
 		return nbMessage - nbMsgProduit;
 	}
-	
+
 	public boolean check(){
 		return (nbMsgProduit+1) < nbMessage;
 	}
@@ -44,7 +46,9 @@ public class Producteur extends Acteur implements _Producteur {
 		{
 			try {
 				MessageX msg = new MessageX(identification(),nbMsgProduit, nbMsg.next(), false);
-				System.out.println("\t\tCreation : " + msg + " quantite : " + msg.getNbAConso());
+				if(affichage == 1){
+					System.out.println("\t\tCreation : " + msg + " quantite : " + msg.getNbAConso());
+				}
 				int wait = 10*alea.next();
 				observateur.productionMessage(this, msg, wait);
 				tampon.put(this, msg);
@@ -67,12 +71,16 @@ public class Producteur extends Acteur implements _Producteur {
 		//TestProdCons.producteurAlive--;
 		if(TestProdCons.producteurAlive == 0)
 		{
-			System.out.println("Je suis le dernier prod, je tue tous le monde : id " + this.identification());
+			if(affichage == 1){
+				System.out.println("Je suis le dernier prod, je tue tous le monde : id " + this.identification());
+			}
 			while(TestProdCons.consommateurAlive > 0)
 			{
 				try {
 					MessageX msg = new MessageX(identification(),nbMsgProduit, 1, true);
-					System.out.println("\t\tCreation : : " + msg);
+					if(affichage == 1){
+						System.out.println("\t\tCreation : : " + msg);
+					}
 					int wait = 10*alea.next();
 					observateur.productionMessage(this, msg, wait);
 					tampon.put(this, msg);
@@ -92,7 +100,9 @@ public class Producteur extends Acteur implements _Producteur {
 				TestProdCons.consommateurAlive--;
 			}
 		}
-		System.out.println("Stop : producteur " + identification());
+		if(affichage == 1){
+			System.out.println("Stop : producteur " + identification());
+		}
 	}
 
 
