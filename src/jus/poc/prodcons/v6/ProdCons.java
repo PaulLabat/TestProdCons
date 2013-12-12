@@ -5,7 +5,7 @@ import jus.poc.prodcons.Observateur;
 import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Consommateur;
 import jus.poc.prodcons._Producteur;
-import jus.poc.prodcons.v5.TestProdCons;
+
 
 public class ProdCons implements Tampon {
 
@@ -63,7 +63,11 @@ public class ProdCons implements Tampon {
 		obstest.depotMessage(arg0, arg1);
 		fin = (fin + 1) % taille();
 		cpt++;
-		System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+		if(!(((Producteur)arg0).check())){
+			TestProdCons.producteurAlive--;
+			System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+		}
+		System.out.println("\tDepot : " + arg1);
 		mutex.v(); // deblocage du buffer
 		consoLibre.v(); // pour avertir les consommateurs
 	}

@@ -6,7 +6,6 @@ import jus.poc.prodcons.ControlException;
 import jus.poc.prodcons.Observateur;
 import jus.poc.prodcons.Tampon;
 import jus.poc.prodcons._Producteur;
-import jus.poc.prodcons.v1.TestProdCons;
 
 public class Producteur extends Acteur implements _Producteur {
 

@@ -41,7 +41,7 @@ public class TestProdCons extends Simulateur {
 
 	@Override
 	protected void run() throws Exception {
-		this.init("src/jus/poc/prodcons/options/options1.xml");
+		this.init("src/jus/poc/prodcons/options/options4.xml");
 		producteurAlive = nbProd;
 		consommateurAlive = nbCons;
 		Tampon t = new ProdCons(nbBuffer, observateur, obst);

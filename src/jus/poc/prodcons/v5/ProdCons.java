@@ -84,9 +84,10 @@ public class ProdCons implements Tampon {
 				TestProdCons.producteurAlive--;
 				System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
 			}
+			System.out.println("\tDepot : "+arg1);
 			fin = (fin + 1) % taille();
 			cpt++;
-			System.out.println("\tDepot : "+arg1);
+			
 			if(isPlein()){
 				nonPlein.signal();
 			}
