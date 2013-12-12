@@ -102,7 +102,9 @@ public class TestProdCons extends Simulateur {
 		for(Map.Entry<Object,Object> entry : properties.entrySet()) {
 			key = (String)entry.getKey();
 			value = Integer.parseInt((String)entry.getValue());
-			System.out.println("key " + key+ " valeurs : "+value);
+			if(affichage==1){
+				System.out.println("key " + key+ " valeurs : "+value);
+			}
 			thisOne.getDeclaredField(key).set(this,value);
 		}
 	}
