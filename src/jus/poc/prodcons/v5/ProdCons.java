@@ -17,6 +17,7 @@ public class ProdCons implements Tampon {
 	private int debut = 0;
 	private int fin = 0;
 	private int cpt = 0;
+	private int affichage;
 
 	// Creation des 3 Semaphores 
 	public Semaphore consoLibre;
@@ -24,11 +25,12 @@ public class ProdCons implements Tampon {
 	public Semaphore mutex;
 	public Observateur obs;
 
+
 	private final Lock verouille;
 	private final Condition nonPlein; 
 	private final Condition nonVide;
 
-	public ProdCons(int taille, Observateur obsParam) {
+	public ProdCons(int taille, Observateur obsParam, int affichage) {
 		msg = new Message[taille];
 		consoLibre = new Semaphore(0);
 		prodLibre = new Semaphore(taille);
@@ -37,6 +39,7 @@ public class ProdCons implements Tampon {
 		this.verouille = new ReentrantLock(true);
 		this.nonPlein = verouille.newCondition();
 		this.nonVide = verouille.newCondition();
+		this.affichage = affichage;
 	}
 
 	/**
@@ -59,7 +62,9 @@ public class ProdCons implements Tampon {
 			obs.retraitMessage(arg0, m);
 			debut = (debut + 1) % taille();
 			cpt--;
-			System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
+			if(affichage == 1){
+				System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
+			}
 			if(isVide()){
 				nonVide.signal();
 			}
@@ -73,7 +78,9 @@ public class ProdCons implements Tampon {
 	public void put(_Producteur arg0, Message arg1) throws Exception,	InterruptedException {
 
 		verouille.lock();
-		System.out.println(arg0.identification());
+		if(affichage == 1){
+			System.out.println(arg0.identification());
+		}
 		try{
 			while(isPlein()){
 				nonVide.await();
@@ -82,12 +89,16 @@ public class ProdCons implements Tampon {
 			obs.depotMessage(arg0, arg1);
 			if(!(((Producteur)arg0).check())){
 				TestProdCons.producteurAlive--;
-				System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+				if(affichage == 1){
+					System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+				}
 			}
-			System.out.println("\tDepot : "+arg1);
+			if(affichage == 1){
+				System.out.println("\tDepot : "+arg1);
+			}
 			fin = (fin + 1) % taille();
 			cpt++;
-			
+
 			if(isPlein()){
 				nonPlein.signal();
 			}
