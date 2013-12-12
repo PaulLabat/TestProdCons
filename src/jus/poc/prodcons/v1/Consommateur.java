@@ -40,22 +40,15 @@ public class Consommateur extends Acteur implements _Consommateur {
 				if(affichage == 1){
 					System.out.println("\t\tLecture IDCons "+identification() + " : "+msg);
 				}
-
 				//code pour quitter la boucle
 				if(msg.toString().contains("poisonPill true"))
 				{
 					break;
 				}
-
-
-
 				nbMsgProduit++;
 				int wait = 10*alea.next();
 				sleep(wait);
-
-
 			} catch ( Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}//
 		}

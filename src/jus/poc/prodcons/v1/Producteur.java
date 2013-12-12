@@ -49,20 +49,13 @@ public class Producteur extends Acteur implements _Producteur {
 				}
 				int wait = 10*alea.next();
 				tampon.put(this, msg);
-
 				nbMsgProduit++; 
-
 				sleep(wait);
-
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 		//code qui tue les consommateurs
-		//TestProdCons.producteurAlive--;
-
 		if(TestProdCons.producteurAlive == 0)
 		{
 			if(affichage == 1){
@@ -77,14 +70,10 @@ public class Producteur extends Acteur implements _Producteur {
 					}
 					int wait = 10*alea.next();
 					tampon.put(this, pill);
-
 					nbMsgProduit++; 
-
 					sleep(wait);
-
-
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				TestProdCons.consommateurAlive--;
