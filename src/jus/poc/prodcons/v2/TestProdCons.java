@@ -43,7 +43,7 @@ public class TestProdCons extends Simulateur {
 		this.init("src/jus/poc/prodcons/options/options1.xml");
 		producteurAlive = nbProd;
 		consommateurAlive = nbCons;
-		Tampon t = new ProdCons(nbBuffer);
+		Tampon t = new ProdCons(nbBuffer, affichage);
 		int i=0;
 		Aleatoire aleaCons = new TirageAlea(tempsMoyenConsommation,deviationTempsMoyenConsommation);
 		Aleatoire aleaTempsProd = new TirageAlea(tempsMoyenProduction, deviationTempsMoyenProduction);
