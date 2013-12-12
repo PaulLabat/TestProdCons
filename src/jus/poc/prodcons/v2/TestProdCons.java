@@ -51,18 +51,22 @@ public class TestProdCons extends Simulateur {
 
 		for(i=0;i<nbCons;i++)
 		{
-			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons);
+			Consommateur c = new Consommateur(observateur, tempsMoyenConsommation, deviationTempsMoyenConsommation, t, aleaCons, affichage);
 			consommateurs.put(c.identification(), c);
 			c.start();
-			System.out.println("Start : consommateur : " + c.identification());
+			if(affichage == 1){
+				System.out.println("Start : consommateur : " + c.identification());
+			}
 		}
 
 		for(i=0;i<nbProd;i++)
 		{
-			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, aleaNbreAProduire.next(), t, aleaTempsProd);
+			Producteur p = new Producteur(observateur, tempsMoyenProduction, deviationTempsMoyenProduction, aleaNbreAProduire.next(), t, aleaTempsProd, affichage);
 			producteurs.put(p.identification(), p);
 			p.start();
-			System.out.println("Start : producteur : " + p.identification());
+			if(affichage == 1){
+				System.out.println("Start : producteur : " + p.identification());
+			}
 		}
 
 
