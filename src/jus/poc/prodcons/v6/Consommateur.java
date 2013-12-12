@@ -14,16 +14,18 @@ public class Consommateur extends Acteur implements _Consommateur {
 	private Tampon tampon;
 	private Aleatoire alea;
 	private ObservationControle obst;
+	private int affichage;
 
 	public Consommateur(Observateur observateur, int moyenneTempsDeTraitement,
 			int deviationTempsDeTraitement, Tampon tampon, Aleatoire alea,
-			ObservationControle obsP) throws ControlException {
+			ObservationControle obsP, int affichage) throws ControlException {
 		super(Acteur.typeConsommateur, observateur, moyenneTempsDeTraitement,
 				deviationTempsDeTraitement);
 		this.alea = alea;
 		this.tampon = tampon;
 		nbMsgProduit = 0;
 		this.obst = obsP;
+		this.affichage = affichage;
 	}
 
 	/**
@@ -37,9 +39,10 @@ public class Consommateur extends Acteur implements _Consommateur {
 		while (true) {
 			try {
 				Message msg = tampon.get(this);// recupere le message depuis le
-												// tampon
-				System.out.println("\t\tLecture IDCons "+identification() + " : "+msg);
-
+				// tampon
+				if(affichage == 1){
+					System.out.println("\t\tLecture IDCons "+identification() + " : "+msg);
+				}
 				// code pour quitter la boucle si le conso est tué
 				if (msg.toString().contains("poisonPill true")) {
 					break;
@@ -56,7 +59,9 @@ public class Consommateur extends Acteur implements _Consommateur {
 				e.printStackTrace();
 			}//
 		}
-		System.out.println("Stop : consommateur : " + identification() + " ayant lu " + nombreDeMessages() + " messages");
+		if(affichage == 1){
+			System.out.println("Stop : consommateur : " + identification() + " ayant lu " + nombreDeMessages() + " messages");
+		}
 	}
 
 }

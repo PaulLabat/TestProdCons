@@ -13,21 +13,23 @@ public class ProdCons implements Tampon {
 	private int debut = 0;
 	private int fin = 0;
 	private int cpt = 0;
-	
+	private int affichage;
+
 	// Creation des 3 Semaphores 
 	public Semaphore consoLibre;
 	public Semaphore prodLibre;
 	public Semaphore mutex;
 	public Observateur obs;
 	public ObservationControle obstest;
-	
-	public ProdCons(int taille, Observateur obsParam, ObservationControle obsc) {
+
+	public ProdCons(int taille, Observateur obsParam, ObservationControle obsc, int affichage) {
 		msg = new Message[taille];
 		consoLibre = new Semaphore(0);
 		prodLibre = new Semaphore(taille);
 		mutex = new Semaphore(1);
 		this.obs = obsParam;
 		this.obstest = obsc;
+		this.affichage = affichage;
 	}
 
 	/**
@@ -48,7 +50,9 @@ public class ProdCons implements Tampon {
 		obstest.retraitMessage(arg0, m);
 		debut = (debut + 1) % taille();
 		cpt--;
-		System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
+		if(affichage == 1){
+			System.out.println("\tRecuperation IDCons "+arg0.identification()+" : "+m);
+		}
 		mutex.v(); // deblocage de l'acce au buffer
 		prodLibre.v(); // pour avertir les producteurs
 		return m;
@@ -65,9 +69,13 @@ public class ProdCons implements Tampon {
 		cpt++;
 		if(!(((Producteur)arg0).check())){
 			TestProdCons.producteurAlive--;
-			System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+			if(affichage == 1){
+				System.out.println("producteurAlive : "+TestProdCons.producteurAlive);
+			}
 		}
-		System.out.println("\tDepot : " + arg1);
+		if(affichage == 1){
+			System.out.println("\tDepot : " + arg1);
+		}
 		mutex.v(); // deblocage du buffer
 		consoLibre.v(); // pour avertir les consommateurs
 	}
@@ -96,6 +104,6 @@ public class ProdCons implements Tampon {
 	{
 		return cpt == 0;
 	}
-	
+
 
 }
