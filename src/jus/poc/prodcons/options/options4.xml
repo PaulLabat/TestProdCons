@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>
-Cette configuration ...
+Risque de bug pour la version 4. Affichage absent.
 </comment>
  <entry key="nbProd">5</entry> 
  <entry key="nbCons">5</entry> 

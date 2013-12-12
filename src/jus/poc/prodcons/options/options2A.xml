@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>
-Cette configuration ...
+Beaucoup de producteur et un seul consommateur. Avec affichage.
 </comment>
  <entry key="nbProd">10</entry> 
  <entry key="nbCons">1</entry> 

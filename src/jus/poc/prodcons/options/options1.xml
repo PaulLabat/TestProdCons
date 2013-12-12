@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>
-Cette configuration ...
+COnfiguration simple 10 producteurs et consommateurs avec un buffer de taille 1. Pas d'affichage.
 </comment>
  <entry key="nbProd">10</entry> 
  <entry key="nbCons">10</entry> 
